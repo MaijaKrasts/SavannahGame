@@ -6,7 +6,7 @@ namespace Savannah
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello to Savannah!");
+            Console.WriteLine("Hello to Savannah! You want to play a game?");
         }
     }
 }
