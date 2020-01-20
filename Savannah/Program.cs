@@ -1,12 +1,36 @@
-﻿using System;
+﻿using Savannah.Models;
+using System;
+using System.Reflection;
 
 namespace Savannah
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello to Savannah! You want to play a game?");
+            Board b = new Board();
+            Field field = b.CreateField();
+
+            Display display = new Display();
+            AnimalController animal = new AnimalController();
+
+            while(true)
+            {
+                Console.SetCursorPosition(0, 0);
+                display.DrawAnimals(field);
+
+                var key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.A)
+                {
+                    animal.CreateAntelope(field);
+                }
+                else if (key.Key == ConsoleKey.L)
+                {
+                    animal.CreateLion(field);
+                }
+
+            }
         }
+
     }
 }
