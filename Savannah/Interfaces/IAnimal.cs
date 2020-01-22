@@ -7,7 +7,9 @@
         int CoordinateX { get; set; }
 
         int CoordinateY { get; set; }
-        
-        string Symbol { get;}
+
+        string Symbol { get; }
+
+        IAnimal ClosestEnemy { get; set; }
     }
 }

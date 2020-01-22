@@ -1,18 +1,20 @@
-﻿using Savannah.Models;
-using Savannah.Static;
-using System;
-
-namespace Savannah
+﻿namespace Savannah
 {
+    using System;
+    using System.Collections.Generic;
+    using Savannah.Interfaces;
+    using Savannah.Models;
+    using Savannah.Static;
+
     public class Display
     {
-        public void DrawAnimals(Field field)
+        public void DrawAnimals(Field field, List<IAnimal> additionalAnimal)
         {
             for (int currentRow = 0; currentRow < field.Height; currentRow++)
             {
                 for (int currentColumn = 0; currentColumn < field.Width; currentColumn++)
                 {
-                    var currentAnimal = field.Animals.Find(u => u.CoordinateX == currentRow && u.CoordinateY == currentColumn);
+                    var currentAnimal = additionalAnimal.Find(u => u.CoordinateX == currentRow && u.CoordinateY == currentColumn);
 
                     if (currentAnimal == null)
                     {
@@ -29,6 +31,8 @@ namespace Savannah
                     }
                 }
             }
+
+            field.Animals = additionalAnimal;
         }
     }
 }

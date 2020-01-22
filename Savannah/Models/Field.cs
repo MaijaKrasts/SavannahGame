@@ -5,12 +5,10 @@
 
     public class Field
     {
-        public int Height { get; set; }
+        public int Height { get => 20; }
 
-        public int Width { get; set; }
+        public int Width { get => 20; }
 
         public List<IAnimal> Animals { get; set; }
-
-        public List<Antelope> Antelopes { get; set; }
     }
 }

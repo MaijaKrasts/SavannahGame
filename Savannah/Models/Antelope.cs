@@ -10,6 +10,8 @@
 
         public int CoordinateY { get; set; }
 
-        public string Symbol { get => "A";}
+        public string Symbol { get => "A";  }
+
+        public IAnimal ClosestEnemy { get; set; }
     }
 }
