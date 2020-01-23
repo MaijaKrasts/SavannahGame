@@ -1,4 +1,6 @@
-﻿namespace Savannah.Interfaces
+﻿using Savannah.Models;
+
+namespace Savannah.Interfaces
 {
     public interface IAnimal
     {
@@ -8,11 +10,11 @@
 
         int CoordinateY { get; set; }
 
-        string Symbol { get; }
+        string Symbol { get; set; }
 
         bool Herbivore { get; set; }
 
-        IAnimal ClosestEnemy { get; set; }
+        Animal ClosestEnemy { get; set; }
 
     }
 }

@@ -8,16 +8,15 @@
     public class GeneralAnimalAction : IGeneralAnimalAction
     {
 
-        public List<IAnimal> AdditionalAnimalField(Field field)
+        public List<Animal> AdditionalAnimalField(Field field)
         {
-            List<IAnimal> additionalAnimals = field.Animals;
+            List<Animal> additionalAnimals = field.Animals;
             return additionalAnimals;
         }
 
         public bool AnimalExists(int coordinateX, int coordinateY, Field field)
         {
-            var animalExist = false;
-            animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null == true;
+            bool animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null;
             return animalExist;
         }
 
@@ -43,14 +42,14 @@
 
             if (animalExist == null)
             {
-                return true;
+                return false;
             }
             else if (animalExist.Herbivore == true)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public bool AnimalOutOfField(int coordinateX, int coordinateY, Field field)

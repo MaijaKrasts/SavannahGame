@@ -1,7 +1,7 @@
-﻿using Savannah.Interfaces;
+﻿namespace Savannah
+{
+    using Savannah.Interfaces;
 
-namespace Savannah
-{ 
     public class Program
     {
         public static void Main(string[] args)
@@ -13,8 +13,9 @@ namespace Savannah
             AntelopeAction herbivore = new AntelopeAction(generalAction, math, facade);
             CarnivoreAction carnivore = new CarnivoreAction(generalAction, math, facade);
             IAnimalFactory factory = new AnimalFactory(generalAction, facade);
+            IFieldFactory fieldFactory = new FieldFactory();
 
-            GameLoop play = new GameLoop(display, herbivore, carnivore, generalAction, factory);
+            GameLoop play = new GameLoop(display, herbivore, carnivore, generalAction, factory, fieldFactory);
             play.Loop();
         }
     }

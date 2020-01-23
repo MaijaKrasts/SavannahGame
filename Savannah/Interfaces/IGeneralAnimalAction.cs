@@ -5,7 +5,7 @@
 
     public interface IGeneralAnimalAction
     {
-        List<IAnimal> AdditionalAnimalField(Field field);
+        List<Animal> AdditionalAnimalField(Field field);
 
         bool AnimalExists(int coordinateX, int coordinateY, Field field);
 

@@ -35,7 +35,7 @@
                 {
                     var location = _math.Vector(herbivore.CoordinateX, carnivore.CoordinateX, herbivore.CoordinateY, carnivore.CoordinateY);
 
-                    if (location < ultimateLocation)
+                    if (location <= ultimateLocation)
                     {
                         if (location < Numbers.VisionRange)
                         {
@@ -47,7 +47,7 @@
             }
         }
 
-        public List<IAnimal> Move(List<IAnimal> additionalField, Field field)
+        public List<Animal> Move(List<Animal> additionalField, Field field)
         {
             var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
 
@@ -66,7 +66,7 @@
             return additionalField;
         }
 
-        public List<IAnimal> MoveWithoutEnemies(IAnimal herbivore, List<IAnimal> additionalField, Field field)
+        public List<Animal> MoveWithoutEnemies(Animal herbivore, List<Animal> additionalField, Field field)
         {
             bool foundMove = false;
 
@@ -97,7 +97,7 @@
             return additionalField;
         }
 
-        public List<IAnimal> MoveWithEnemies(IAnimal herbivore, List<IAnimal> additionalField, Field field)
+        public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> additionalField, Field field)
         {
             var initialLocation = _math.Vector(herbivore.CoordinateX, herbivore.CoordinateY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
 
@@ -117,7 +117,7 @@
                     if (validMove)
                     {
                         double betterLocation = _math.Vector(nextStepX, nextStepY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
-                        if (betterLocation > initialLocation)
+                        if (betterLocation >= initialLocation)
                         {
                             initialLocation = betterLocation;
                             var findAnimal = additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX);

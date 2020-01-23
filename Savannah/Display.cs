@@ -14,7 +14,7 @@
             _facade = facade;
         }
 
-        public void DrawAnimals(Field field, List<IAnimal> additionalAnimal)
+        public void DrawAnimals(Field field, List<Animal> additionalAnimal)
         {
             for (int currentRow = 0; currentRow < field.Height; currentRow++)
             {

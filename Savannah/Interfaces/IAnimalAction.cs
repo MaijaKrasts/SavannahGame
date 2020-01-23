@@ -5,14 +5,12 @@
 
     public interface IAnimalAction
     { 
-        //IAnimal Create(Field field);
-
         void Locate(Field field);
 
-        List<IAnimal> Move(List<IAnimal> additionalField, Field field);
+        List<Animal> Move(List<Animal> additionalField, Field field);
 
-        List<IAnimal> MoveWithoutEnemies(IAnimal animal, List<IAnimal> additionalField, Field field);
+        List<Animal> MoveWithoutEnemies(Animal animal, List<Animal> additionalField, Field field);
 
-        List<IAnimal> MoveWithEnemies(IAnimal animal, List<IAnimal> additionalField, Field field);
+        List<Animal> MoveWithEnemies(Animal animal, List<Animal> additionalField, Field field);
     }
 }

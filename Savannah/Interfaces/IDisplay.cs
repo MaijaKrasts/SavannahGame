@@ -5,6 +5,6 @@
 
     public interface IDisplay
     {
-        void DrawAnimals(Field field, List<IAnimal> additionalAnimal);
+        void DrawAnimals(Field field, List<Animal> additionalAnimal);
     }
 }

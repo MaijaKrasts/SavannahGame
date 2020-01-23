@@ -5,7 +5,7 @@
     public interface IAnimalFactory
     {
 
-        IAnimal CreateLion(Field field);
-        IAnimal CreateAntelope(Field field);
+        Animal CreateLion(Field field);
+        Animal CreateAntelope(Field field);
     }
 }

@@ -14,7 +14,7 @@
             _facade = facade;
         }
 
-        public IAnimal CreateLion(Field field)
+        public Animal CreateLion(Field field)
         {
             var rnd = _facade.GetRandom();
             var coordY = rnd.Next(field.Height);
@@ -29,12 +29,14 @@
             newLion.Alive = true;
             newLion.CoordinateX = coordY;
             newLion.CoordinateY = coordX;
+            newLion.Herbivore = false;
+            newLion.Symbol = "L";
 
             field.Animals.Add(newLion);
             return newLion;
         }
 
-        public IAnimal CreateAntelope(Field field)
+        public Animal CreateAntelope(Field field)
         {
             var rnd = _facade.GetRandom();
             var coordX = rnd.Next(field.Height);
@@ -50,6 +52,7 @@
             newAntelope.CoordinateX = coordX;
             newAntelope.CoordinateY = coordY;
             newAntelope.Herbivore = true;
+            newAntelope.Symbol = "A";
 
             field.Animals.Add(newAntelope);
             return newAntelope;

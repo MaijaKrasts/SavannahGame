@@ -13,21 +13,22 @@
         private IAnimalAction _herbivore;
         private IAnimalAction _carnivore;
         private IGeneralAnimalAction _generalAction;
-        private IAnimalFactory _factory;
+        private IAnimalFactory _animalFactory;
+        private IFieldFactory _fieldFactory;
 
-        public GameLoop(IDisplay display, AntelopeAction herbivore, CarnivoreAction carnivore, IGeneralAnimalAction generalAction,IAnimalFactory factory)
+        public GameLoop(IDisplay display, AntelopeAction herbivore, CarnivoreAction carnivore, IGeneralAnimalAction generalAction, IAnimalFactory animalfactory, IFieldFactory fieldFactory)
         {
-            field = new Field();
-            field.Animals = new List<IAnimal>();
             _display = display;
             _herbivore = herbivore;
             _carnivore = carnivore;
             _generalAction = generalAction;
-            _factory = factory;
+            _animalFactory = animalfactory;
+            _fieldFactory = fieldFactory;
         }
 
         public void Loop()
         {
+            field = _fieldFactory.CreateField();
             var additionalField = _generalAction.AdditionalAnimalField(field);
             bool animalsInField = true;
 
@@ -39,11 +40,11 @@
                 var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.A)
                 {
-                    _factory.CreateAntelope(field);
+                    _animalFactory.CreateAntelope(field);
                 }
                 else if (key.Key == ConsoleKey.L)
                 {
-                   _factory.CreateLion(field);
+                   _animalFactory.CreateLion(field);
                 }
                 else if (key.Key == ConsoleKey.Enter)
                 {
@@ -59,7 +60,6 @@
                 _herbivore.Move(additionalField, field);
                 Console.SetCursorPosition(0, 0);
                 _display.DrawAnimals(field, additionalField);
-                additionalField = _generalAction.AdditionalAnimalField(field);
                 Thread.Sleep(500);
             }
         }
