@@ -5,3 +5,9 @@ dotnet_diagnostic.SA1600.severity = silent
 
 # SA1101: Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = silent
+
+# IDE0044: Add readonly modifier
+dotnet_style_readonly_field = true:silent
+
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = silent

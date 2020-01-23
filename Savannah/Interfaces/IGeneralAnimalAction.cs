@@ -7,14 +7,12 @@
     {
         List<IAnimal> AdditionalAnimalField(Field field);
 
-        bool AnimalExists(int coordinateX, int coordinateY);
+        bool AnimalExists(int coordinateX, int coordinateY, Field field);
 
-        bool LionExists(int coordinateX, int coordinateY);
+        bool CarnivoreExists(int coordinateX, int coordinateY, Field field);
 
-        bool AntelopeExists(int coordinateX, int coordinateY);
+        bool HerbivoreExists(int coordinateX, int coordinateY, Field field);
 
         bool AnimalOutOfField(int coordinateX, int coordinateY, Field field);
-
-        double LocateSingle(int animalX, int animalY, int enemyX, int enemyY);
     }
 }

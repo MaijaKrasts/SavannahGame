@@ -10,6 +10,9 @@
 
         string Symbol { get; }
 
+        bool Herbivore { get; set; }
+
         IAnimal ClosestEnemy { get; set; }
+
     }
 }

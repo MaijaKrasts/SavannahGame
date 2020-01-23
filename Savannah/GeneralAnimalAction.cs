@@ -7,51 +7,45 @@
 
     public class GeneralAnimalAction : IGeneralAnimalAction
     {
-        private List<IAnimal> animals;
-
-        public GeneralAnimalAction()
-        {
-            animals = new List<IAnimal>();
-        }
 
         public List<IAnimal> AdditionalAnimalField(Field field)
         {
-            List<IAnimal> additionalAnimals = new List<IAnimal>();
-            additionalAnimals = field.Animals;
+            List<IAnimal> additionalAnimals = field.Animals;
             return additionalAnimals;
         }
 
-        public bool AnimalExists(int coordinateX, int coordinateY)
+        public bool AnimalExists(int coordinateX, int coordinateY, Field field)
         {
-            var animalExist = animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null;
+            var animalExist = false;
+            animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null == true;
             return animalExist;
         }
 
-        public bool LionExists(int coordinateX, int coordinateY)
+        public bool CarnivoreExists(int coordinateX, int coordinateY, Field field)
         {
-            var animalExist = animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
+            var animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
 
             if (animalExist == null)
             {
-                return true;
+                return false;
             }
-            else if (animalExist.Symbol == "L")
+            else if (animalExist.Herbivore == false)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
-        public bool AntelopeExists(int coordinateX, int coordinateY)
+        public bool HerbivoreExists(int coordinateX, int coordinateY, Field field)
         {
-            var animalExist = animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
+            var animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
 
             if (animalExist == null)
             {
                 return true;
             }
-            else if (animalExist.Symbol == "A")
+            else if (animalExist.Herbivore == true)
             {
                 return true;
             }
@@ -65,14 +59,5 @@
             return outOfField;
         }
 
-        public double LocateSingle(int animalX, int animalY, int enemyX, int enemyY)
-        {
-            var xLocation = (enemyX - animalX) * (enemyX - animalX);
-            var yLocation = (enemyY - animalY) * (enemyY - animalY);
-
-            var location = Math.Sqrt(xLocation + yLocation);
-
-            return location;
-        }
     }
 }

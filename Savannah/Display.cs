@@ -1,13 +1,19 @@
 ﻿namespace Savannah
 {
-    using System;
     using System.Collections.Generic;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
 
-    public class Display
+    public class Display : IDisplay
     {
+        private IFacade _facade;
+
+        public Display(IFacade facade)
+        {
+            _facade = facade;
+        }
+
         public void DrawAnimals(Field field, List<IAnimal> additionalAnimal)
         {
             for (int currentRow = 0; currentRow < field.Height; currentRow++)
@@ -18,16 +24,16 @@
 
                     if (currentAnimal == null)
                     {
-                        Console.Write(Texts.Empthy);
+                        _facade.Write(Texts.Empty);
                     }
-                    else if(currentAnimal.Alive)
+                    else if (currentAnimal.Alive)
                     {
-                        Console.Write(currentAnimal.Symbol);
+                        _facade.Write(currentAnimal.Symbol);
                     }
 
                     if (currentColumn == field.Width - 1)
                     {
-                        Console.WriteLine(Texts.Return);
+                        _facade.WriteLine(Texts.Return);
                     }
                 }
             }

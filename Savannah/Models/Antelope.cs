@@ -13,5 +13,7 @@
         public string Symbol { get => "A";  }
 
         public IAnimal ClosestEnemy { get; set; }
+
+        public bool Herbivore { get; set; }
     }
 }

@@ -6,41 +6,44 @@
     using Savannah.Interfaces;
     using Savannah.Models;
 
-    public class GameLoop
+    public class GameLoop : IGameLoop
     {
         private Field field;
-        private Display display;
-        private AntelopeAction antelope;
-        private LionAction lion;
-        private GeneralAnimalAction generalAnimal;
+        private IDisplay _display;
+        private IAnimalAction _herbivore;
+        private IAnimalAction _carnivore;
+        private IGeneralAnimalAction _generalAction;
+        private IAnimalFactory _factory;
 
-        public GameLoop()
+        public GameLoop(IDisplay display, AntelopeAction herbivore, CarnivoreAction carnivore, IGeneralAnimalAction generalAction,IAnimalFactory factory)
         {
             field = new Field();
             field.Animals = new List<IAnimal>();
-            display = new Display();
-            antelope = new AntelopeAction();
-            lion = new LionAction();
-            generalAnimal = new GeneralAnimalAction();
+            _display = display;
+            _herbivore = herbivore;
+            _carnivore = carnivore;
+            _generalAction = generalAction;
+            _factory = factory;
         }
 
         public void Loop()
         {
-            var additionalAnimals = generalAnimal.AdditionalAnimalField(field);
+            var additionalAnimals = _generalAction.AdditionalAnimalField(field);
+            bool animalsInField = true;
 
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
-                display.DrawAnimals(field, additionalAnimals);
+                _display.DrawAnimals(field, additionalAnimals);
 
                 var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.A)
                 {
-                    antelope.Create(field);
+                    _factory.CreateAntelope(field);
                 }
                 else if (key.Key == ConsoleKey.L)
                 {
-                    lion.Create(field);
+                   _factory.CreateLion(field);
                 }
                 else if (key.Key == ConsoleKey.Enter)
                 {
@@ -48,14 +51,14 @@
                 }
             }
 
-            while (true)
+            while (animalsInField)
             {
-                lion.Locate(field);
-                lion.MoveWithoutEnemies(field, additionalAnimals);
-                antelope.MoveWithoutEnemies(field, additionalAnimals);
+                _carnivore.Locate(field);
+                _carnivore.MoveWithoutEnemies(field, additionalAnimals);
+                _herbivore.MoveWithoutEnemies(field, additionalAnimals);
                 Console.SetCursorPosition(0, 0);
-                display.DrawAnimals(field, additionalAnimals);
-                additionalAnimals = generalAnimal.AdditionalAnimalField(field);
+                _display.DrawAnimals(field, additionalAnimals);
+                additionalAnimals = _generalAction.AdditionalAnimalField(field);
                 Thread.Sleep(500);
             }
         }
