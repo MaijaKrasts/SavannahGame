@@ -9,8 +9,10 @@
 
         void Locate(Field field);
 
-        Field MoveWithoutEnemies(Field field, List<IAnimal> additionalField);
+        List<IAnimal> Move(List<IAnimal> additionalField, Field field);
 
-        IAnimal MoveWithEnemies(IAnimal animal, List<IAnimal> additionalField, Field field);
+        List<IAnimal> MoveWithoutEnemies(IAnimal animal, List<IAnimal> additionalField, Field field);
+
+        List<IAnimal> MoveWithEnemies(IAnimal animal, List<IAnimal> additionalField, Field field);
     }
 }

@@ -47,47 +47,57 @@
             }
         }
 
-        public Field MoveWithoutEnemies(Field field, List<IAnimal> additionalField)
+        public List<IAnimal> Move(List<IAnimal> additionalField, Field field)
         {
             var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
-
-            int moveX = 0;
-            int moveY = 0;
-            bool foundMove = false;
 
             foreach (var herbivore in herbivoreList)
             {
                 if (herbivore.ClosestEnemy == null)
                 {
-                    while (!foundMove)
-                    {
-                        moveX = rnd.Next(-1, 2);
-                        moveY = rnd.Next(-1, 2);
-
-                        var validMove = (herbivore.CoordinateX + moveX < field.Width)
-                            && (herbivore.CoordinateY + moveY < field.Height)
-                            && (herbivore.CoordinateX + moveX > 0)
-                            && (herbivore.CoordinateY + moveY > 0);
-
-                        if (validMove)
-                        {
-                            foundMove = true;
-                        }
-                    }
-
-                    additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX).CoordinateX += moveX;
-                    additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX).CoordinateY += moveY;
+                    additionalField = MoveWithoutEnemies(herbivore, additionalField, field);
                 }
                 else if (herbivore.ClosestEnemy != null)
                 {
-                    MoveWithEnemies(herbivore, additionalField, field);
+                    additionalField = MoveWithEnemies(herbivore, additionalField, field);
                 }
             }
 
-            return field;
+            return additionalField;
         }
 
-        public IAnimal MoveWithEnemies(IAnimal herbivore, List<IAnimal> additionalField, Field field)
+        public List<IAnimal> MoveWithoutEnemies(IAnimal herbivore, List<IAnimal> additionalField, Field field)
+        {
+            bool foundMove = false;
+
+            while (!foundMove)
+            {
+                int moveX = rnd.Next(-1, 2);
+                int moveY = rnd.Next(-1, 2);
+
+                int nextStepX = herbivore.CoordinateX + moveX;
+                int nextStepY = herbivore.CoordinateY + moveY;
+
+                var validMove = (nextStepX < field.Width)
+                    && (nextStepY < field.Height)
+                    && (nextStepX > 0)
+                    && (nextStepY > 0)
+                    && !_generalActions.AnimalExists(nextStepX, nextStepY, field);
+
+                if (validMove)
+                {
+                    foundMove = true;
+                }
+
+                var findAnimal = additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX);
+                findAnimal.CoordinateX += moveX;
+                findAnimal.CoordinateY += moveY;
+            }
+
+            return additionalField;
+        }
+
+        public List<IAnimal> MoveWithEnemies(IAnimal herbivore, List<IAnimal> additionalField, Field field)
         {
             var initialLocation = _math.Vector(herbivore.CoordinateX, herbivore.CoordinateY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
 
@@ -98,20 +108,26 @@
                     int nextStepX = herbivore.CoordinateX + coordX;
                     int nextStepY = herbivore.CoordinateY + coordY;
 
-                    double betterLocation = _math.Vector(nextStepX, nextStepY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
-                    if (!_generalActions.AnimalExists(nextStepX, nextStepY, field))
+                    var validMove = (nextStepX < field.Width)
+                            && (nextStepY < field.Height)
+                            && (nextStepX > 0)
+                            && (nextStepY > 0)
+                            && !_generalActions.AnimalExists(nextStepX, nextStepY, field);
+
+                    if (validMove)
                     {
+                        double betterLocation = _math.Vector(nextStepX, nextStepY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
                         if (betterLocation > initialLocation)
                         {
                             initialLocation = betterLocation;
-
-                            additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX).CoordinateX += coordX;
-                            additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX).CoordinateY += coordY;
+                            var findAnimal = additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX);
+                            findAnimal.CoordinateX += coordX;
+                            findAnimal.CoordinateY += coordY;
                         }
                     }
                 }
             }
-            return herbivore;
+            return additionalField;
         }
     }
 }

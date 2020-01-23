@@ -28,13 +28,13 @@
 
         public void Loop()
         {
-            var additionalAnimals = _generalAction.AdditionalAnimalField(field);
+            var additionalField = _generalAction.AdditionalAnimalField(field);
             bool animalsInField = true;
 
             while (true)
             {
                 Console.SetCursorPosition(0, 0);
-                _display.DrawAnimals(field, additionalAnimals);
+                _display.DrawAnimals(field, additionalField);
 
                 var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.A)
@@ -54,11 +54,12 @@
             while (animalsInField)
             {
                 _carnivore.Locate(field);
-                _carnivore.MoveWithoutEnemies(field, additionalAnimals);
-                _herbivore.MoveWithoutEnemies(field, additionalAnimals);
+                _herbivore.Locate(field);
+                _carnivore.Move(additionalField, field);
+                _herbivore.Move(additionalField, field);
                 Console.SetCursorPosition(0, 0);
-                _display.DrawAnimals(field, additionalAnimals);
-                additionalAnimals = _generalAction.AdditionalAnimalField(field);
+                _display.DrawAnimals(field, additionalField);
+                additionalField = _generalAction.AdditionalAnimalField(field);
                 Thread.Sleep(500);
             }
         }
