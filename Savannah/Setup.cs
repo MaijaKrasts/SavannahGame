@@ -8,14 +8,14 @@
         {
             IConsoleFacade facade = new Config.ConsoleFacade();
             ICalculations math = new Calculations();
-            IGeneralAnimalAction generalAction = new GeneralAnimalAction();
+            IAnimalValidator validator = new AnimalValidator();
             IDisplay display = new Display(facade);
-            HerbivoreManager herbivore = new HerbivoreManager(generalAction, math, facade);
-            CarnivoreManager carnivore = new CarnivoreManager(generalAction, math, facade);
-            IAnimalFactory animalFactory = new AnimalFactory(generalAction, facade);
+            HerbivoreManager herbivore = new HerbivoreManager(validator, math, facade);
+            CarnivoreManager carnivore = new CarnivoreManager(validator, math, facade);
+            IAnimalFactory animalFactory = new AnimalFactory(validator, facade);
             IFieldFactory fieldFactory = new FieldFactory();
 
-            GameEngine play = new GameEngine(display, herbivore, carnivore, generalAction, animalFactory, fieldFactory);
+            GameEngine play = new GameEngine(display, herbivore, carnivore, validator, animalFactory, fieldFactory);
             play.CreateGamefield();
         }
     }

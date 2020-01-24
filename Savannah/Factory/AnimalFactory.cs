@@ -6,10 +6,10 @@
 
     public class AnimalFactory : IAnimalFactory
     {
-        private IGeneralAnimalAction _generalActions;
+        private IAnimalValidator _generalActions;
         private IConsoleFacade _facade;
 
-        public AnimalFactory(IGeneralAnimalAction generalAction, IConsoleFacade facade)
+        public AnimalFactory(IAnimalValidator generalAction, IConsoleFacade facade)
         {
             _generalActions = generalAction;
             _facade = facade;

@@ -9,14 +9,14 @@
 
     public class HerbivoreManager : IAnimalManager
     {
-        private IGeneralAnimalAction _generalActions;
+        private IAnimalValidator _validator;
         private ICalculations _math;
         private IConsoleFacade _facade;
         private Random rnd;
 
-        public HerbivoreManager(IGeneralAnimalAction generalAction, ICalculations math, IConsoleFacade facade)
+        public HerbivoreManager(IAnimalValidator generalAction, ICalculations math, IConsoleFacade facade)
         {
-            _generalActions = generalAction;
+            _validator = generalAction;
             _math = math;
             _facade = facade;
             rnd = _facade.GetRandom();
@@ -86,7 +86,7 @@
                     && (nextStepY < field.Height)
                     && (nextStepX > 0)
                     && (nextStepY > 0)
-                    && !_generalActions.AnimalExists(nextStepX, nextStepY, field);
+                    && !_validator.AnimalExists(nextStepX, nextStepY, field);
 
                 if (validMove)
                 {
@@ -116,7 +116,7 @@
                             && (nextStepY < field.Height)
                             && (nextStepX > 0)
                             && (nextStepY > 0)
-                            && !_generalActions.AnimalExists(nextStepX, nextStepY, field);
+                            && !_validator.AnimalExists(nextStepX, nextStepY, field);
 
                     if (validMove)
                     {

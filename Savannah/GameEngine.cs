@@ -11,16 +11,16 @@
         private IDisplay _display;
         private IAnimalManager _herbivore;
         private IAnimalManager _carnivore;
-        private IGeneralAnimalAction _generalAction;
+        private IAnimalValidator _validator;
         private IAnimalFactory _animalFactory;
         private IFieldFactory _fieldFactory;
 
-        public GameEngine(IDisplay display, HerbivoreManager herbivore, CarnivoreManager carnivore, IGeneralAnimalAction generalAction, IAnimalFactory animalfactory, IFieldFactory fieldFactory)
+        public GameEngine(IDisplay display, HerbivoreManager herbivore, CarnivoreManager carnivore, IAnimalValidator generalAction, IAnimalFactory animalfactory, IFieldFactory fieldFactory)
         {
             _display = display;
             _herbivore = herbivore;
             _carnivore = carnivore;
-            _generalAction = generalAction;
+            _validator = generalAction;
             _animalFactory = animalfactory;
             _fieldFactory = fieldFactory;
         }
@@ -28,7 +28,7 @@
         public void CreateGamefield()
         {
             field = _fieldFactory.CreateField();
-            var additionalField = _generalAction.AdditionalAnimalField(field);
+            var additionalField = _validator.AdditionalAnimalField(field);
             bool fieldCreated = false;
 
             while (!fieldCreated)
@@ -55,7 +55,7 @@
 
         public void LifeCycle(Field field)
         { 
-            var additionalField = _generalAction.AdditionalAnimalField(field);
+            var additionalField = _validator.AdditionalAnimalField(field);
             bool animalsInField = true;
 
             while (animalsInField)

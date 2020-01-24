@@ -9,7 +9,7 @@ namespace Savannah
     [TestFixture]
     public class CarnivorManagerTests
     {
-        private Mock<IGeneralAnimalAction> generalAnimalActionMock;
+        private Mock<IAnimalValidator> generalAnimalActionMock;
 
         private Mock<ICalculations> calculationsMock;
 
@@ -19,7 +19,7 @@ namespace Savannah
 
         public CarnivorManagerTests()
         {
-            generalAnimalActionMock = new Mock<IGeneralAnimalAction>();
+            generalAnimalActionMock = new Mock<IAnimalValidator>();
             calculationsMock = new Mock<ICalculations>();
             facadeMock = new Mock<IConsoleFacade>();
 

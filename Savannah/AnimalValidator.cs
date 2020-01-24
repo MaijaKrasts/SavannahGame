@@ -5,7 +5,7 @@
     using Savannah.Interfaces;
     using Savannah.Models;
 
-    public class GeneralAnimalAction : IGeneralAnimalAction
+    public class AnimalValidator : IAnimalValidator
     {
 
         public List<Animal> AdditionalAnimalField(Field field)

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Savannah.Models;
 
-    public interface IGeneralAnimalAction
+    public interface IAnimalValidator
     {
         List<Animal> AdditionalAnimalField(Field field);
 
