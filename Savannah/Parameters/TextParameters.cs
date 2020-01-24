@@ -6,5 +6,6 @@
         public const string Lion = "L";
         public const string Empty = " ";
         public const string Return = "\r";
+        public const string Endgame = "Game has ended!";
     }
 }

@@ -13,13 +13,15 @@
         private ICalculations _math;
         private IConsoleFacade _facade;
         private Random rnd;
+        private IGenericAnimalManager _genericAnimal;
 
-        public CarnivoreManager(IAnimalValidator generalAction, ICalculations math, IConsoleFacade facade)
+        public CarnivoreManager(IAnimalValidator validator, ICalculations math, IConsoleFacade facade, IGenericAnimalManager genericAnimal)
         {
-            _validator = generalAction;
+            _validator = validator;
             _math = math;
             _facade = facade;
             rnd = _facade.GetRandom();
+            _genericAnimal = genericAnimal;
         }
 
         public void Locate(Field field)
@@ -37,7 +39,7 @@
 
                     if (location <= ultimateLocation)
                     {
-                        if (location < Numbers.VisionRange)
+                        if (location < NumberParameters.VisionRange)
                         {
                             ultimateLocation = location;
                             carnivore.ClosestEnemy = herbivore;
@@ -65,6 +67,8 @@
                 {
                     additionalField = MoveWithEnemies(carnivore, additionalField, field);
                 }
+
+                _genericAnimal.DecreaseHealth(carnivore);
             }
 
             return additionalField;
@@ -82,10 +86,7 @@
                 int nextStepX = carnivore.CoordinateX + moveX;
                 int nextStepY = carnivore.CoordinateY + moveY;
 
-                var validMove = (nextStepX < field.Width)
-                    && (nextStepY < field.Height)
-                    && (nextStepX > 0)
-                    && (nextStepY > 0)
+                var validMove = _validator.ValidateMove(nextStepX, nextStepY, field)
                     && !_validator.AnimalExists(nextStepX, nextStepY, field);
 
                 if (validMove)
@@ -93,9 +94,8 @@
                     foundMove = true;
                 }
 
-                var findAnimal = additionalField.Find(c => c.CoordinateY == carnivore.CoordinateY && c.CoordinateX == carnivore.CoordinateX);
-                findAnimal.CoordinateX += moveX;
-                findAnimal.CoordinateY += moveY;
+                carnivore.CoordinateX = nextStepX;
+                carnivore.CoordinateY = nextStepY;
             }
 
             return additionalField;
@@ -112,26 +112,23 @@
                     int nextStepX = carnivore.CoordinateX + coordX;
                     int nextStepY = carnivore.CoordinateY + coordY;
 
-                    var validMove = (nextStepX < field.Width)
-                            && (nextStepY < field.Height)
-                            && (nextStepX > 0)
-                            && (nextStepY > 0);
+                    var validMove = _validator.ValidateMove(nextStepX, nextStepY, field)
+                        && !_validator.CarnivoreExists(nextStepX, nextStepY, field);
 
-                    if (validMove && !_validator.CarnivoreExists(nextStepX, nextStepY, field))
+                    if (validMove)
                     {
                         double betterLocation = _math.Vector(nextStepX, nextStepY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
-                        if (betterLocation <= initialLocation)
+                        if (betterLocation < initialLocation)
                         {
                             initialLocation = betterLocation;
-                            var findAnimal = additionalField.Find(c => c.CoordinateY == carnivore.CoordinateY && c.CoordinateX == carnivore.CoordinateX);
-                            findAnimal.CoordinateX = nextStepX;
-                            findAnimal.CoordinateY = nextStepY;
+                            carnivore.CoordinateX = nextStepX;
+                            carnivore.CoordinateY = nextStepY;
 
-                            if (_validator.HerbivoreExists(findAnimal.CoordinateY, findAnimal.CoordinateY, field))
+                            if (_validator.HerbivoreExists(carnivore.CoordinateY, carnivore.CoordinateY, field))
                             {
                                 EatVictim(carnivore, additionalField);
-                                findAnimal.CoordinateX = nextStepX;
-                                findAnimal.CoordinateY = nextStepY;
+                                carnivore.CoordinateX = nextStepX;
+                                carnivore.CoordinateY = nextStepY;
                                 break;
                             }
                         }
@@ -147,8 +144,5 @@
             additionalField.Remove(carnivore.ClosestEnemy);
             carnivore.ClosestEnemy.Alive = false;
         }
-
-
-
     }
 }

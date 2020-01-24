@@ -15,5 +15,7 @@ namespace Savannah.Models
         public bool Herbivore { get; set; }
 
         public Animal ClosestEnemy { get; set; }
+
+        public int Health {get; set;}
     }
 }

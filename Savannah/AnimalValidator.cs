@@ -1,19 +1,10 @@
 ﻿namespace Savannah
 {
-    using System;
-    using System.Collections.Generic;
     using Savannah.Interfaces;
     using Savannah.Models;
 
     public class AnimalValidator : IAnimalValidator
     {
-
-        public List<Animal> AdditionalAnimalField(Field field)
-        {
-            List<Animal> additionalAnimals = field.Animals;
-            return additionalAnimals;
-        }
-
         public bool AnimalExists(int coordinateX, int coordinateY, Field field)
         {
             bool animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null;
@@ -56,6 +47,16 @@
         {
             var outOfField = coordinateX > field.Height || coordinateY > field.Width;
             return outOfField;
+        }
+
+        public bool ValidateMove(int nextStepX, int nextStepY, Field field)
+        {
+            var validMove = (nextStepX < field.Width)
+                  && (nextStepY < field.Height)
+                  && (nextStepX > 0)
+                  && (nextStepY > 0);
+
+            return validMove;
         }
 
     }

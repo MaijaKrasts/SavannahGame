@@ -32,6 +32,7 @@
             newLion.CoordinateY = coordX;
             newLion.Herbivore = false;
             newLion.Symbol = TextParameters.Lion;
+            newLion.Health = NumberParameters.MaxHealth;
 
             field.Animals.Add(newLion);
             return newLion;
@@ -54,6 +55,7 @@
             newAntelope.CoordinateY = coordY;
             newAntelope.Herbivore = true;
             newAntelope.Symbol = TextParameters.Antelope;
+            newAntelope.Health = NumberParameters.MaxHealth;
 
             field.Animals.Add(newAntelope);
             return newAntelope;
