@@ -11,3 +11,6 @@ dotnet_style_readonly_field = true:silent
 
 # SA1309: Field names should not begin with underscore
 dotnet_diagnostic.SA1309.severity = silent
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = silent

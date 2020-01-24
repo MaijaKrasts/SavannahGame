@@ -2,13 +2,14 @@
 {
     using Savannah.Interfaces;
     using Savannah.Models;
+    using Savannah.Static;
 
     public class AnimalFactory : IAnimalFactory
     {
         private IGeneralAnimalAction _generalActions;
-        private IFacade _facade;
+        private IConsoleFacade _facade;
 
-        public AnimalFactory(IGeneralAnimalAction generalAction, IFacade facade)
+        public AnimalFactory(IGeneralAnimalAction generalAction, IConsoleFacade facade)
         {
             _generalActions = generalAction;
             _facade = facade;
@@ -30,7 +31,7 @@
             newLion.CoordinateX = coordY;
             newLion.CoordinateY = coordX;
             newLion.Herbivore = false;
-            newLion.Symbol = "L";
+            newLion.Symbol = TextParameters.Lion;
 
             field.Animals.Add(newLion);
             return newLion;
@@ -52,7 +53,7 @@
             newAntelope.CoordinateX = coordX;
             newAntelope.CoordinateY = coordY;
             newAntelope.Herbivore = true;
-            newAntelope.Symbol = "A";
+            newAntelope.Symbol = TextParameters.Antelope;
 
             field.Animals.Add(newAntelope);
             return newAntelope;

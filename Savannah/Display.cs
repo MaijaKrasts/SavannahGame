@@ -7,9 +7,9 @@
 
     public class Display : IDisplay
     {
-        private IFacade _facade;
+        private IConsoleFacade _facade;
 
-        public Display(IFacade facade)
+        public Display(IConsoleFacade facade)
         {
             _facade = facade;
         }
@@ -24,7 +24,7 @@
 
                     if (currentAnimal == null)
                     {
-                        _facade.Write(Texts.Empty);
+                        _facade.Write(TextParameters.Empty);
                     }
                     else if (currentAnimal.Alive)
                     {
@@ -33,7 +33,7 @@
 
                     if (currentColumn == field.Width - 1)
                     {
-                        _facade.WriteLine(Texts.Return);
+                        _facade.WriteLine(TextParameters.Return);
                     }
                 }
             }

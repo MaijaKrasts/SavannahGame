@@ -7,14 +7,14 @@
     using Savannah.Models;
     using Savannah.Static;
 
-    public class CarnivoreAction : IAnimalAction
+    public class CarnivoreManager : IAnimalManager
     {
         private IGeneralAnimalAction _generalActions;
         private ICalculations _math;
-        private IFacade _facade;
+        private IConsoleFacade _facade;
         private Random rnd;
 
-        public CarnivoreAction(IGeneralAnimalAction generalAction, ICalculations math, IFacade facade)
+        public CarnivoreManager(IGeneralAnimalAction generalAction, ICalculations math, IConsoleFacade facade)
         {
             _generalActions = generalAction;
             _math = math;
@@ -42,12 +42,16 @@
                             ultimateLocation = location;
                             carnivore.ClosestEnemy = herbivore;
                         }
+                        else
+                        {
+                            carnivore.ClosestEnemy = null;
+                        }
                     }
                 }
             }
         }
 
-        public List<Animal> Move(List<Animal> additionalField, Field field)
+        public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
         {
             var carnivoreList = field.Animals.FindAll(a => a.Herbivore == false).ToList();
 
@@ -116,20 +120,20 @@
                     if (validMove && !_generalActions.CarnivoreExists(nextStepX, nextStepY, field))
                     {
                         double betterLocation = _math.Vector(nextStepX, nextStepY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
-                        if (betterLocation >= initialLocation)
+                        if (betterLocation <= initialLocation)
                         {
                             initialLocation = betterLocation;
                             var findAnimal = additionalField.Find(c => c.CoordinateY == carnivore.CoordinateY && c.CoordinateX == carnivore.CoordinateX);
-                            findAnimal.CoordinateX += coordX;
-                            findAnimal.CoordinateY += coordY;
+                            findAnimal.CoordinateX = nextStepX;
+                            findAnimal.CoordinateY = nextStepY;
 
-                            //if (_generalActions.HerbivoreExists(findAnimal.CoordinateY, findAnimal.CoordinateY, field))
-                            //{
-                            //    EatVictim(carnivore, additionalField);
-                            //    findAnimal.CoordinateX += coordX;
-                            //    findAnimal.CoordinateY += coordY;
-                            //    break;
-                            //}
+                            if (_generalActions.HerbivoreExists(findAnimal.CoordinateY, findAnimal.CoordinateY, field))
+                            {
+                                EatVictim(carnivore, additionalField);
+                                findAnimal.CoordinateX = nextStepX;
+                                findAnimal.CoordinateY = nextStepY;
+                                break;
+                            }
                         }
                     }
                 }

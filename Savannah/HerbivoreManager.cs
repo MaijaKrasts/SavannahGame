@@ -7,14 +7,14 @@
     using Savannah.Models;
     using Savannah.Static;
 
-    public class AntelopeAction : IAnimalAction
+    public class HerbivoreManager : IAnimalManager
     {
         private IGeneralAnimalAction _generalActions;
         private ICalculations _math;
-        private IFacade _facade;
+        private IConsoleFacade _facade;
         private Random rnd;
 
-        public AntelopeAction(IGeneralAnimalAction generalAction, ICalculations math, IFacade facade)
+        public HerbivoreManager(IGeneralAnimalAction generalAction, ICalculations math, IConsoleFacade facade)
         {
             _generalActions = generalAction;
             _math = math;
@@ -42,12 +42,16 @@
                             ultimateLocation = location;
                             herbivore.ClosestEnemy = carnivore;
                         }
+                        else
+                        {
+                            carnivore.ClosestEnemy = null;
+                        }
                     }
                 }
             }
         }
 
-        public List<Animal> Move(List<Animal> additionalField, Field field)
+        public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
         {
             var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
 
@@ -99,7 +103,7 @@
 
         public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> additionalField, Field field)
         {
-            var initialLocation = _math.Vector(herbivore.CoordinateX, herbivore.CoordinateY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
+            double closestLocation = 0;
 
             for (int coordX = -1; coordX < 2; coordX++)
             {
@@ -117,12 +121,12 @@
                     if (validMove)
                     {
                         double betterLocation = _math.Vector(nextStepX, nextStepY, herbivore.ClosestEnemy.CoordinateX, herbivore.ClosestEnemy.CoordinateY);
-                        if (betterLocation >= initialLocation)
+                        if (betterLocation >= closestLocation)
                         {
-                            initialLocation = betterLocation;
+                            closestLocation = betterLocation;
                             var findAnimal = additionalField.Find(c => c.CoordinateY == herbivore.CoordinateY && c.CoordinateX == herbivore.CoordinateX);
-                            findAnimal.CoordinateX += coordX;
-                            findAnimal.CoordinateY += coordY;
+                            findAnimal.CoordinateX = nextStepX;
+                            findAnimal.CoordinateY += nextStepY;
                         }
                     }
                 }

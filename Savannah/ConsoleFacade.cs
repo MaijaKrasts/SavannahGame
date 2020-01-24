@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Facade : IFacade
+    public class ConsoleFacade : IConsoleFacade
     {
         public void Write(string text)
         {

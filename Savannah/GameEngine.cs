@@ -1,22 +1,21 @@
 ﻿namespace Savannah
 {
     using System;
-    using System.Collections.Generic;
     using System.Threading;
     using Savannah.Interfaces;
     using Savannah.Models;
 
-    public class GameLoop : IGameLoop
+    public class GameEngine : IGameEngine
     {
         private Field field;
         private IDisplay _display;
-        private IAnimalAction _herbivore;
-        private IAnimalAction _carnivore;
+        private IAnimalManager _herbivore;
+        private IAnimalManager _carnivore;
         private IGeneralAnimalAction _generalAction;
         private IAnimalFactory _animalFactory;
         private IFieldFactory _fieldFactory;
 
-        public GameLoop(IDisplay display, AntelopeAction herbivore, CarnivoreAction carnivore, IGeneralAnimalAction generalAction, IAnimalFactory animalfactory, IFieldFactory fieldFactory)
+        public GameEngine(IDisplay display, HerbivoreManager herbivore, CarnivoreManager carnivore, IGeneralAnimalAction generalAction, IAnimalFactory animalfactory, IFieldFactory fieldFactory)
         {
             _display = display;
             _herbivore = herbivore;
@@ -26,13 +25,13 @@
             _fieldFactory = fieldFactory;
         }
 
-        public void Loop()
+        public void CreateGamefield()
         {
             field = _fieldFactory.CreateField();
             var additionalField = _generalAction.AdditionalAnimalField(field);
-            bool animalsInField = true;
+            bool fieldCreated = false;
 
-            while (true)
+            while (!fieldCreated)
             {
                 Console.SetCursorPosition(0, 0);
                 _display.DrawAnimals(field, additionalField);
@@ -48,16 +47,23 @@
                 }
                 else if (key.Key == ConsoleKey.Enter)
                 {
-                    break;
+                    fieldCreated = true;
+                    LifeCycle(field);
                 }
             }
+        }
+
+        public void LifeCycle(Field field)
+        { 
+            var additionalField = _generalAction.AdditionalAnimalField(field);
+            bool animalsInField = true;
 
             while (animalsInField)
             {
                 _carnivore.Locate(field);
                 _herbivore.Locate(field);
-                _carnivore.Move(additionalField, field);
-                _herbivore.Move(additionalField, field);
+                _carnivore.ChooseTheMove(additionalField, field);
+                _herbivore.ChooseTheMove(additionalField, field);
                 Console.SetCursorPosition(0, 0);
                 _display.DrawAnimals(field, additionalField);
                 Thread.Sleep(500);
