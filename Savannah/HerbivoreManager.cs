@@ -5,7 +5,6 @@
     using System.Linq;
     using Savannah.Interfaces;
     using Savannah.Models;
-    using Savannah.Static;
 
     public class HerbivoreManager : IAnimalManager
     {
@@ -22,35 +21,6 @@
             _facade = facade;
             rnd = _facade.GetRandom();
             _genericAnimal = genericAnimal;
-        }
-
-        public void Locate(Field field)
-        {
-            double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
-
-            var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
-            var carnivoreList = field.Animals.FindAll(a => a.Herbivore == false).ToList();
-
-            foreach (var herbivore in herbivoreList)
-            {
-                foreach (var carnivore in carnivoreList)
-                {
-                    var location = _math.Vector(herbivore.CoordinateX, carnivore.CoordinateX, herbivore.CoordinateY, carnivore.CoordinateY);
-
-                    if (location <= ultimateLocation)
-                    {
-                        if (location < NumberParameters.VisionRange)
-                        {
-                            ultimateLocation = location;
-                            herbivore.ClosestEnemy = carnivore;
-                        }
-                        else
-                        {
-                            carnivore.ClosestEnemy = null;
-                        }
-                    }
-                }
-            }
         }
 
         public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
@@ -94,8 +64,7 @@
                     foundMove = true;
                 }
 
-                herbivore.CoordinateX = nextStepX;
-                herbivore.CoordinateY = nextStepY;
+                _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore);
             }
 
             return additionalField;
@@ -121,8 +90,7 @@
                         if (betterLocation >= closestLocation)
                         {
                             closestLocation = betterLocation;
-                            herbivore.CoordinateX = nextStepX;
-                            herbivore.CoordinateY = nextStepY;
+                            _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore);
                         }
                     }
                 }

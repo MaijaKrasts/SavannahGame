@@ -16,6 +16,8 @@ namespace Savannah.Interfaces
 
         Animal ClosestEnemy { get; set; }
 
+        Animal ClosestMate { get; set; }
+
         int Health { get; set; }
 
     }

@@ -5,8 +5,6 @@
 
     public interface IAnimalManager
     { 
-        void Locate(Field field);
-
         List<Animal> ChooseTheMove(List<Animal> additionalField, Field field);
 
         List<Animal> MoveWithoutEnemies(Animal animal, List<Animal> additionalField, Field field);

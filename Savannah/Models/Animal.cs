@@ -16,6 +16,8 @@ namespace Savannah.Models
 
         public Animal ClosestEnemy { get; set; }
 
-        public int Health {get; set;}
+        public Animal ClosestMate { get ; set; }
+
+        public int Health {get; set; }
     }
 }

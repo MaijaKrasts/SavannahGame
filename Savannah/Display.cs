@@ -37,7 +37,10 @@
                     }
                 }
             }
+        }
 
+        public void ResetValues(Field field, List<Animal> additionalAnimal)
+        {
             field.Animals = additionalAnimal;
         }
     }

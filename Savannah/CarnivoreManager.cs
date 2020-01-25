@@ -5,7 +5,6 @@
     using System.Linq;
     using Savannah.Interfaces;
     using Savannah.Models;
-    using Savannah.Static;
 
     public class CarnivoreManager : IAnimalManager
     {
@@ -22,35 +21,6 @@
             _facade = facade;
             rnd = _facade.GetRandom();
             _genericAnimal = genericAnimal;
-        }
-
-        public void Locate(Field field)
-        {
-            double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
-
-            var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
-            var carnivoreList = field.Animals.FindAll(a => a.Herbivore == false).ToList();
-
-            foreach (var carnivore in carnivoreList)
-            {
-                foreach (var herbivore in herbivoreList)
-                {
-                    var location = _math.Vector(herbivore.CoordinateX, carnivore.CoordinateX, herbivore.CoordinateY, carnivore.CoordinateY);
-
-                    if (location <= ultimateLocation)
-                    {
-                        if (location < NumberParameters.VisionRange)
-                        {
-                            ultimateLocation = location;
-                            carnivore.ClosestEnemy = herbivore;
-                        }
-                        else
-                        {
-                            carnivore.ClosestEnemy = null;
-                        }
-                    }
-                }
-            }
         }
 
         public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
@@ -94,8 +64,7 @@
                     foundMove = true;
                 }
 
-                carnivore.CoordinateX = nextStepX;
-                carnivore.CoordinateY = nextStepY;
+                _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore);
             }
 
             return additionalField;
@@ -121,14 +90,12 @@
                         if (betterLocation < initialLocation)
                         {
                             initialLocation = betterLocation;
-                            carnivore.CoordinateX = nextStepX;
-                            carnivore.CoordinateY = nextStepY;
+                            _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore);
 
                             if (_validator.HerbivoreExists(carnivore.CoordinateY, carnivore.CoordinateY, field))
                             {
                                 EatVictim(carnivore, additionalField);
-                                carnivore.CoordinateX = nextStepX;
-                                carnivore.CoordinateY = nextStepY;
+                                _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore);
                                 break;
                             }
                         }

@@ -1,6 +1,5 @@
 ﻿namespace Savannah
 {
-
     using System.Collections.Generic;
     using Savannah.Interfaces;
     using Savannah.Models;

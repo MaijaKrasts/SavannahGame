@@ -1,13 +1,18 @@
 ﻿namespace Savannah
 {
-    using Savannah.Interfaces;
+    using Ninject;
+    using System.Reflection;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            Setup config = new Setup();
-            config.GameSetup();
+
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+
+            var play = kernel.Get<IGameEngine>();
+            play.CreateGamefield();
         }
     }
 }

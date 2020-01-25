@@ -338,3 +338,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Savannah/DI/BaseFactory.cs
+/Savannah/DI/SavannahFactory.cs

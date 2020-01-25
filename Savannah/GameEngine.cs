@@ -15,7 +15,7 @@
         private IFieldFactory _fieldFactory;
         private IGenericAnimalManager _genericAnimal;
 
-        public GameEngine(IDisplay display, HerbivoreManager herbivore, CarnivoreManager carnivore, IAnimalValidator generalAction, IAnimalFactory animalfactory, IFieldFactory fieldFactory, IGenericAnimalManager genericAnimal)
+        public GameEngine(IDisplay display, HerbivoreManager herbivore, CarnivoreManager carnivore, IAnimalFactory animalfactory, IFieldFactory fieldFactory, IGenericAnimalManager genericAnimal)
         {
             _display = display;
             _herbivore = herbivore;
@@ -56,16 +56,15 @@
         public void LifeCycle(Field field)
         { 
             var additionalField = _genericAnimal.AdditionalAnimalList(field);
-            bool animalsInField = true;
 
-            while (animalsInField)
+            while (!Console.KeyAvailable)
             {
-                _carnivore.Locate(field);
-                _herbivore.Locate(field);
+                _genericAnimal.LocateEnemy(field);
                 _carnivore.ChooseTheMove(additionalField, field);
                 _herbivore.ChooseTheMove(additionalField, field);
                 Console.SetCursorPosition(0, 0);
                 _display.DrawAnimals(field, additionalField);
+                _display.ResetValues(field, additionalField);
                 Thread.Sleep(500);
             }
         }
