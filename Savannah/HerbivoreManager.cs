@@ -6,7 +6,7 @@
     using Savannah.Interfaces;
     using Savannah.Models;
 
-    public class HerbivoreManager : IAnimalManager
+    public class HerbivoreManager : IHerbivoreManager
     {
         private IAnimalValidator _validator;
         private ICalculations _math;

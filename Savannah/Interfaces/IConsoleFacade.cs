@@ -15,5 +15,11 @@
         void Clear();
 
         Random GetRandom();
+
+        bool KeyAvailable();
+       
+        void SetCursorPosition();
+
+        void Sleep();
     }
 }

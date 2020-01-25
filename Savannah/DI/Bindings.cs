@@ -1,8 +1,8 @@
 ﻿namespace Savannah.DI
 {
     using Ninject.Modules;
-    using Savannah.Interfaces;
     using Savannah.Config;
+    using Savannah.Interfaces;
 
     public class Bindings : NinjectModule
     {
@@ -14,11 +14,10 @@
             Bind<IDisplay>().To<Display>();
             Bind<IGameEngine>().To<GameEngine>();
             Bind<IGenericAnimalManager>().To<GenericAnimalManager>();
-            Bind<IAnimalManager>().To<HerbivoreManager>();
-            Bind<IAnimalManager>().To<CarnivoreManager>();
+            Bind<IHerbivoreManager>().To<HerbivoreManager>();
+            Bind<ICarnivoreManager>().To<CarnivoreManager>();
             Bind<IAnimalFactory>().To<AnimalFactory>();
             Bind<IFieldFactory>().To<FieldFactory>();
-            Bind<ISetup>().To<Setup>();
         }
     }
 }

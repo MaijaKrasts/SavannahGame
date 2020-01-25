@@ -1,6 +1,7 @@
 ﻿namespace Savannah.Config
 {
     using System;
+    using System.Threading;
 
     public class ConsoleFacade : IConsoleFacade
     {
@@ -34,6 +35,21 @@
         {
             Random rnd = new Random();
             return rnd;
+        }
+
+        public bool KeyAvailable()
+        {
+            return Console.KeyAvailable;
+        }
+
+        public void SetCursorPosition()
+        {
+            Console.SetCursorPosition(0, 0);
+        }
+
+        public void Sleep()
+        {
+            Thread.Sleep(500);
         }
     }
 }

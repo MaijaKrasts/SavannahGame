@@ -9,15 +9,17 @@
     {
         private Field field;
         private IDisplay _display;
-        private IAnimalManager _herbivore;
-        private IAnimalManager _carnivore;
+        private IConsoleFacade _facade;
+        private IHerbivoreManager _herbivore;
+        private ICarnivoreManager _carnivore;
         private IAnimalFactory _animalFactory;
         private IFieldFactory _fieldFactory;
         private IGenericAnimalManager _genericAnimal;
 
-        public GameEngine(IDisplay display, HerbivoreManager herbivore, CarnivoreManager carnivore, IAnimalFactory animalfactory, IFieldFactory fieldFactory, IGenericAnimalManager genericAnimal)
+        public GameEngine(IDisplay display, IConsoleFacade facade, IHerbivoreManager herbivore, ICarnivoreManager carnivore, IAnimalFactory animalfactory, IFieldFactory fieldFactory, IGenericAnimalManager genericAnimal)
         {
             _display = display;
+            _facade = facade;
             _herbivore = herbivore;
             _carnivore = carnivore;
             _animalFactory = animalfactory;
@@ -56,16 +58,19 @@
         public void LifeCycle(Field field)
         { 
             var additionalField = _genericAnimal.AdditionalAnimalList(field);
+            bool keyAvailabe = false;
 
-            while (!Console.KeyAvailable)
+            while (!keyAvailabe)
             {
                 _genericAnimal.LocateEnemy(field);
                 _carnivore.ChooseTheMove(additionalField, field);
                 _herbivore.ChooseTheMove(additionalField, field);
-                Console.SetCursorPosition(0, 0);
+                _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
                 _display.ResetValues(field, additionalField);
-                Thread.Sleep(500);
+                _facade.Sleep();
+
+                keyAvailabe = _facade.KeyAvailable();
             }
         }
     }
