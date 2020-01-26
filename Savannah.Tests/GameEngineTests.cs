@@ -2,9 +2,7 @@
 using NUnit.Framework;
 using Savannah.Interfaces;
 using Savannah.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Savannah.Tests
 {

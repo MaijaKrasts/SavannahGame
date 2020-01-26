@@ -20,7 +20,7 @@
                 return false;
             }
 
-            return animalExist.Herbivore;
+            return !animalExist.Herbivore;
         }
 
         public bool HerbivoreExists(int coordinateX, int coordinateY, Field field)
@@ -31,12 +31,8 @@
             {
                 return false;
             }
-            else if (animalExist.Herbivore == true)
-            {
-                return false;
-            }
 
-            return true;
+            return animalExist.Herbivore;
         }
 
         public bool AnimalOutOfField(int coordinateX, int coordinateY, Field field)

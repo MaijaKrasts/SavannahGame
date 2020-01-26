@@ -23,7 +23,8 @@
 
         public List<Animal> AdditionalAnimalList(Field field)
         {
-            List<Animal> additionalAnimals = field.Animals;
+            List<Animal> additionalAnimals = new List<Animal>();
+            additionalAnimals = field.Animals;
             return additionalAnimals;
         }
 

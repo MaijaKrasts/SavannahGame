@@ -19,7 +19,6 @@
             _validator = generalAction;
             _math = math;
             _facade = facade;
-            rnd = _facade.GetRandom();
             _genericAnimal = genericAnimal;
         }
 
@@ -50,8 +49,8 @@
 
             while (!foundMove)
             {
-                int moveX = rnd.Next(-1, 2);
-                int moveY = rnd.Next(-1, 2);
+                int moveX = _facade.GetRandom(-1, 2);
+                int moveY = _facade.GetRandom(-1, 2);
 
                 int nextStepX = herbivore.CoordinateX + moveX;
                 int nextStepY = herbivore.CoordinateY + moveY;

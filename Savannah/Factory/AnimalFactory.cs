@@ -3,62 +3,59 @@
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
+    using System;
 
     public class AnimalFactory : IAnimalFactory
     {
-        private IAnimalValidator _generalActions;
+        private IAnimalValidator _validator;
         private IConsoleFacade _facade;
 
         public AnimalFactory(IAnimalValidator generalAction, IConsoleFacade facade)
         {
-            _generalActions = generalAction;
+            _validator = generalAction;
             _facade = facade;
         }
 
-        public Animal CreateLion(Field field)
+        public Animal CreateAnimal(ConsoleKey key, Field field)
         {
-            var rnd = _facade.GetRandom();
-            var coordY = rnd.Next(field.Height);
-            var coordX = rnd.Next(field.Width);
+            var coordX = _facade.GetRandom();
+            var coordY = _facade.GetRandom();
 
-            if (_generalActions.AnimalExists(coordY, coordX, field))
+            if (_validator.AnimalExists(coordX, coordY, field))
             {
-                CreateLion(field);
+                CreateAnimal(key, field);
             }
 
-            var newLion = new Lion();
-            newLion.Alive = true;
-            newLion.CoordinateX = coordY;
-            newLion.CoordinateY = coordX;
-            newLion.Herbivore = false;
-            newLion.Symbol = TextParameters.Lion;
-            newLion.Health = NumberParameters.MaxHealth;
-
-            field.Animals.Add(newLion);
-            return newLion;
-        }
-
-        public Animal CreateAntelope(Field field)
-        {
-            var rnd = _facade.GetRandom();
-            var coordX = rnd.Next(field.Height);
-            var coordY = rnd.Next(field.Width);
-
-            if (_generalActions.AnimalExists(coordX, coordY, field))
+            var newAnimal = new Animal();
+            if (key == TextParameters.AntelopeKey)
             {
-                CreateAntelope(field);
+                newAnimal = new Antelope()
+                {
+                    Alive = true,
+                    CoordinateX = coordX,
+                    CoordinateY = coordY,
+                    Herbivore = true,
+                    Symbol = TextParameters.Antelope,
+                    Health = NumberParameters.MaxHealth,
+                };
             }
 
-            var newAntelope = new Antelope();
-            newAntelope.Alive = true;
-            newAntelope.CoordinateX = coordX;
-            newAntelope.CoordinateY = coordY;
-            newAntelope.Herbivore = true;
-            newAntelope.Symbol = TextParameters.Antelope;
-            newAntelope.Health = NumberParameters.MaxHealth;
+            else if (key == TextParameters.LionKey)
+            {
+                newAnimal = new Lion() {
 
-            field.Animals.Add(newAntelope);
-            return newAntelope;
+                    Alive = true,
+                    CoordinateX = coordX,
+                    CoordinateY = coordY,
+                    Herbivore = false,
+                    Symbol = TextParameters.Lion,
+                    Health = NumberParameters.MaxHealth,
+                };
+            }
+
+            field.Animals.Add(newAnimal);
+            return newAnimal;
         }
     }
+
 }

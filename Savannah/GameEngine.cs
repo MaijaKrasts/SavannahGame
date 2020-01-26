@@ -4,6 +4,7 @@
     using System.Threading;
     using Savannah.Interfaces;
     using Savannah.Models;
+    using Savannah.Static;
 
     public class GameEngine : IGameEngine
     {
@@ -35,19 +36,13 @@
 
             while (!fieldCreated)
             {
-                Console.SetCursorPosition(0, 0);
+                _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
 
-                var key = Console.ReadKey(true);
-                if (key.Key == ConsoleKey.A)
-                {
-                    _animalFactory.CreateAntelope(field);
-                }
-                else if (key.Key == ConsoleKey.L)
-                {
-                   _animalFactory.CreateLion(field);
-                }
-                else if (key.Key == ConsoleKey.Enter)
+                var key = _facade.ConsoleKey();
+                _animalFactory.CreateAnimal(key, field);
+
+                if (key == TextParameters.EnterKey)
                 {
                     fieldCreated = true;
                     LifeCycle(field);

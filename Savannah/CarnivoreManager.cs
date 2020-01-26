@@ -19,7 +19,6 @@
             _validator = validator;
             _math = math;
             _facade = facade;
-            rnd = _facade.GetRandom();
             _genericAnimal = genericAnimal;
         }
 
@@ -50,8 +49,8 @@
 
             while (!foundMove)
             {
-                int moveX = rnd.Next(-1, 2);
-                int moveY = rnd.Next(-1, 2);
+                int moveX = _facade.GetRandom(-1, 2);
+                int moveY = _facade.GetRandom(-1, 2);
 
                 int nextStepX = carnivore.CoordinateX + moveX;
                 int nextStepY = carnivore.CoordinateY + moveY;
@@ -95,7 +94,6 @@
                             if (_validator.HerbivoreExists(carnivore.CoordinateY, carnivore.CoordinateY, field))
                             {
                                 EatVictim(carnivore, additionalField);
-                                _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore);
                                 break;
                             }
                         }
@@ -106,10 +104,12 @@
             return additionalField;
         }
 
-        public void EatVictim(Animal carnivore, List<Animal> additionalField)
+        public Animal EatVictim(Animal carnivore, List<Animal> additionalField)
         {
             additionalField.Remove(carnivore.ClosestEnemy);
             carnivore.ClosestEnemy.Alive = false;
+
+            return carnivore.ClosestEnemy;
         }
     }
 }

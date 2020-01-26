@@ -1,11 +1,10 @@
 ﻿namespace Savannah.Interfaces
 {
+    using System;
     using Savannah.Models;
 
     public interface IAnimalFactory
     {
-
-        Animal CreateLion(Field field);
-        Animal CreateAntelope(Field field);
+        Animal CreateAnimal(ConsoleKey key, Field field);
     }
 }

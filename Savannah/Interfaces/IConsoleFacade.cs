@@ -14,12 +14,16 @@
 
         void Clear();
 
-        Random GetRandom();
+        int GetRandom(int minValue, int maxValue);
+
+        int GetRandom();
 
         bool KeyAvailable();
-       
+
         void SetCursorPosition();
 
         void Sleep();
+
+        ConsoleKey ConsoleKey();
     }
 }
