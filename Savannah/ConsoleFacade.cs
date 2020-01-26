@@ -31,7 +31,7 @@
             Console.Clear();
         }
 
-        public int GetRandom(int minValue, int maxValue)
+        public int GetRandomMinMax(int minValue, int maxValue)
         {
             Random rnd = new Random();
             var num = rnd.Next(minValue, maxValue);

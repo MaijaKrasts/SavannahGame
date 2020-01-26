@@ -49,8 +49,8 @@
 
             while (!foundMove)
             {
-                int moveX = _facade.GetRandom(-1, 2);
-                int moveY = _facade.GetRandom(-1, 2);
+                int moveX = _facade.GetRandomMinMax(-1, 2);
+                int moveY = _facade.GetRandomMinMax(-1, 2);
 
                 int nextStepX = carnivore.CoordinateX + moveX;
                 int nextStepY = carnivore.CoordinateY + moveY;

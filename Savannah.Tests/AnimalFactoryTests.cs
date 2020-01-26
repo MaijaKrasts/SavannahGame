@@ -20,8 +20,8 @@ namespace Savannah.Tests
         [SetUp]
         public void Setup()
         {
-            animalValidatorMock = new Mock<IAnimalValidator>(MockBehavior.Strict);
-            facadeMock = new Mock<IConsoleFacade>(MockBehavior.Strict);
+            animalValidatorMock = new Mock<IAnimalValidator>();
+            facadeMock = new Mock<IConsoleFacade>();
 
             animalFactory = new AnimalFactory(animalValidatorMock.Object, facadeMock.Object);
         }
@@ -42,25 +42,12 @@ namespace Savannah.Tests
             };
 
             ConsoleKey key = TextParameters.LionKey;
-            //int coordX = 4;
-            //int coordY = 5;
 
-            Animal Lion = new Animal()
-            {
-                //Alive = true,
-                //CoordinateX = coordX,
-                //CoordinateY = coordY,
-                //Herbivore = false,
-                //Symbol = TextParameters.Lion,
-                //Health = NumberParameters.MaxHealth,
-            };
-
-            // ACT
-            
+            //ACT
             var result = animalFactory.CreateAnimal(key, field);
 
             // ASSERT
-            Assert.AreSame(Lion, result);
+            Assert.IsInstanceOf<Animal>(result);
         }
     }
 }

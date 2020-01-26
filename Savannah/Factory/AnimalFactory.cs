@@ -18,8 +18,8 @@
 
         public Animal CreateAnimal(ConsoleKey key, Field field)
         {
-            var coordX = _facade.GetRandom();
-            var coordY = _facade.GetRandom();
+            var coordX = _facade.GetRandomMinMax(0, field.Width);
+            var coordY = _facade.GetRandomMinMax(0, field.Height);
 
             if (_validator.AnimalExists(coordX, coordY, field))
             {

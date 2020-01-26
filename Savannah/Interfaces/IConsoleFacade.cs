@@ -14,7 +14,7 @@
 
         void Clear();
 
-        int GetRandom(int minValue, int maxValue);
+        int GetRandomMinMax(int minValue, int maxValue);
 
         int GetRandom();
 
