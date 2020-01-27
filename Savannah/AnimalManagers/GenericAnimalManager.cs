@@ -26,6 +26,18 @@
             return additionalAnimals;
         }
 
+        public Animal FindInField(Field field, int coordX, int coordY)
+        {
+            var animal = field.Animals.Find(a => a.CoordinateX == coordX && a.CoordinateY == coordY);
+            return animal;
+        }
+
+        public Animal FindInList(List<Animal> additionalAnimal, int coordX, int coordY)
+        {
+            var animal = additionalAnimal.Find(u => u.CoordinateX == coordX && u.CoordinateY == coordY);
+            return animal;
+        }
+
         public void LocateEnemy(Field field)
         {
             double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
@@ -41,7 +53,7 @@
 
                     if (location <= ultimateLocation)
                     {
-                        if (location < NumberParameters.VisionRange)
+                        if (location < NumParameters.VisionRange)
                         {
                             ultimateLocation = location;
                             herbivore.ClosestEnemy = carnivore;
@@ -63,18 +75,22 @@
 
             foreach (var animal in animalList)
             {
-                for (int coordX = -2; coordX < 3; coordX++)
+                for (int coordX = NumParameters.BreedingNegative; coordX < NumParameters.BreedingPositive; coordX++)
                 {
-                    for (int coordY = -2; coordY < 3; coordY++)
+                    for (int coordY = NumParameters.BreedingNegative; coordY < NumParameters.BreedingPositive; coordY++)
                     {
                         int nextStepX = animal.CoordinateX + coordX;
                         int nextStepY = animal.CoordinateY + coordY;
 
-                        if(coordX != 0 && coordY != 0)
-                        {
-                            Animal closestAnimal = field.Animals.Find(a => a.CoordinateX == nextStepX && a.CoordinateY == nextStepY);
+                        bool exactAnimal = coordX == 0 && coordY == 0;
 
-                            if (_validator.AnimalExists(nextStepX, nextStepY, field) && closestAnimal.Herbivore == animal.Herbivore)
+                        if(!exactAnimal)
+                        {
+                            Animal closestAnimal = FindInField(field, nextStepX, nextStepY);
+                            var validBreeder = _validator.AnimalExists(nextStepX, nextStepY, field)
+                                && closestAnimal.Herbivore == animal.Herbivore;
+
+                            if (validBreeder)
                             {
                                 BreedingValidator(animal, closestAnimal, field);
                             }
@@ -91,25 +107,25 @@
             if (animal.ClosestMate == null)
                 {
                     animal.ClosestMate = closestAnimal;
-                    animal.MatingCount = 1;
+                    animal.MatingCount = NumParameters.ActiveMatingCount;
                 }
             else if (animal.ClosestMate != null)
                 {
                     if (animal.ClosestMate == closestAnimal)
                     {
                         animal.MatingCount++;
-                        if (animal.MatingCount == 3)
+                        if (animal.MatingCount == NumParameters.MaxMatingCount)
                         {
                             isAnimalBreedable = true;
                             Breed(animal, field);
-                        animal.MatingCount = 0;
+                            animal.MatingCount = NumParameters.InitialMatingCount;
                         }
                     }
                     else
                     {
                         animal.ClosestMate = closestAnimal;
-                        animal.MatingCount = 1;
-                    }
+                        animal.MatingCount = NumParameters.ActiveMatingCount;
+                }
                 }
 
             return isAnimalBreedable;
@@ -117,30 +133,20 @@
 
         public Animal Breed(Animal animal, Field field)
         {
-            var newAnimal = new Animal();
-
-            if (animal.Herbivore == true)
-            {
-                newAnimal = _animalFactory.CreateAnimal(TextParameters.AntelopeKey, field);
-            }
-            else if (animal.Herbivore == false)
-            {
-                newAnimal = _animalFactory.CreateAnimal(TextParameters.LionKey, field);
-            }
-
+            var newAnimal = _animalFactory.CreateAnimal(animal.Key, field);
             return newAnimal;
         }
 
         public void IncreaseHealth(Animal animal)
         {
-            animal.Health += 3;
+            animal.Health += NumParameters.ExtendLife;
         }
 
         public void DecreaseHealth(Animal animal)
         {
             animal.Health--;
 
-            if (animal.Health == 0)
+            if (animal.Health == NumParameters.Die)
             {
                 animal.Alive = false;
             }
@@ -150,11 +156,6 @@
         {
             animal.CoordinateX = nextStepX;
             animal.CoordinateY = nextStepY;
-        }
-
-        public void Breed()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

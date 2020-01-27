@@ -1,4 +1,5 @@
 ﻿using Savannah.Interfaces;
+using System;
 
 namespace Savannah.Models
 {
@@ -11,6 +12,8 @@ namespace Savannah.Models
         public int CoordinateY { get; set; }
 
         public string Symbol { get; set; }
+
+        public ConsoleKey Key { get; set; }
 
         public bool Herbivore { get; set; }
 

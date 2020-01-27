@@ -1,7 +1,7 @@
 ﻿namespace Savannah
 {
-    using Ninject;
     using System.Reflection;
+    using Ninject;
 
     public class Program
     {

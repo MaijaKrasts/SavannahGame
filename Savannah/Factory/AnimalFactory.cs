@@ -1,18 +1,18 @@
 ﻿namespace Savannah
 {
+    using System;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
-    using System;
 
     public class AnimalFactory : IAnimalFactory
     {
         private IAnimalValidator _validator;
         private IConsoleFacade _facade;
 
-        public AnimalFactory(IAnimalValidator generalAction, IConsoleFacade facade)
+        public AnimalFactory(IAnimalValidator validator, IConsoleFacade facade)
         {
-            _validator = generalAction;
+            _validator = validator;
             _facade = facade;
         }
 
@@ -37,11 +37,12 @@
                         CoordinateY = coordY,
                         Herbivore = true,
                         Symbol = TextParameters.Antelope,
+                        Key = TextParameters.AntelopeKey,
                         MatingCount = 0,
-                        Health = NumberParameters.MaxHealth,
+                        Health = NumParameters.MaxHealth,
                     };
                 }
-                else if (key == TextParameters.LionKey)
+            else if (key == TextParameters.LionKey)
                 {
                     newAnimal = new Lion()
                     {
@@ -50,8 +51,9 @@
                         CoordinateY = coordY,
                         Herbivore = false,
                         Symbol = TextParameters.Lion,
+                        Key = TextParameters.LionKey,
                         MatingCount = 0,
-                        Health = NumberParameters.MaxHealth,
+                        Health = NumParameters.MaxHealth,
                     };
                 }
 

@@ -5,13 +5,13 @@
     using System.Linq;
     using Savannah.Interfaces;
     using Savannah.Models;
+    using Savannah.Static;
 
     public class CarnivoreManager : ICarnivoreManager
     {
         private IAnimalValidator _validator;
         private ICalculations _math;
         private IConsoleFacade _facade;
-        private Random rnd;
         private IGenericAnimalManager _genericAnimal;
 
         public CarnivoreManager(IAnimalValidator validator, ICalculations math, IConsoleFacade facade, IGenericAnimalManager genericAnimal)
@@ -49,8 +49,8 @@
 
             while (!foundMove)
             {
-                int moveX = _facade.GetRandomMinMax(-1, 2);
-                int moveY = _facade.GetRandomMinMax(-1, 2);
+                int moveX = _facade.GetRandomMinMax(NumParameters.MovingNegative, NumParameters.MovingPositive);
+                int moveY = _facade.GetRandomMinMax(NumParameters.MovingNegative, NumParameters.MovingPositive);
 
                 int nextStepX = carnivore.CoordinateX + moveX;
                 int nextStepY = carnivore.CoordinateY + moveY;
@@ -73,9 +73,9 @@
         {
             var initialLocation = _math.Vector(carnivore.CoordinateX, carnivore.CoordinateY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
 
-            for (int coordX = -1; coordX < 2; coordX++)
+            for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingNegative; coordX++)
             {
-                for (int coordY = -1; coordY < 2; coordY++)
+                for (int coordY = NumParameters.MovingNegative; coordY < NumParameters.MovingNegative; coordY++)
                 {
                     int nextStepX = carnivore.CoordinateX + coordX;
                     int nextStepY = carnivore.CoordinateY + coordY;

@@ -41,13 +41,15 @@
 
                 var key = _facade.ConsoleKey();
 
+                var animalKey = key == TextParameters.AntelopeKey
+                             || key == TextParameters.LionKey;
+
                 if (key == TextParameters.EnterKey)
                 {
                     fieldCreated = true;
                     LifeCycle(field);
                 }
-
-                else if (key == TextParameters.AntelopeKey || key == TextParameters.LionKey)
+                else if (animalKey)
                 {
                     _animalFactory.CreateAnimal(key, field);
                 }

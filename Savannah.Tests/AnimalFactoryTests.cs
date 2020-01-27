@@ -20,13 +20,13 @@ namespace Savannah.Tests
         public void Setup()
         {
             animalValidatorMock = new Mock<IAnimalValidator>();
-            facadeMock = new Mock<IConsoleFacade>();
+            facadeMock = new Mock<IConsoleFacade>(MockBehavior.Strict);
 
             animalFactory = new AnimalFactory(animalValidatorMock.Object, facadeMock.Object);
         }
 
         [Test]
-        public void CreateAnimal_WhenAllInputIsCorrect_ShouldSucceed()
+        public void CreateAnimal_WhenLionKeyisPassedDown_ShouldCreateInstanceOfAnimal()
         {
             // ARRANGE
 
@@ -41,6 +41,31 @@ namespace Savannah.Tests
             };
 
             ConsoleKey key = TextParameters.LionKey;
+
+            //ACT
+            var result = animalFactory.CreateAnimal(key, field);
+
+            // ASSERT
+            Assert.IsInstanceOf<Animal>(result);
+        }
+
+        [Test]
+        public void CreateAnimal_WhenLionKeyisPassedDown_ShouldCreateALion()
+        {
+            // ARRANGE
+
+            Field field = new Field()
+            {
+                Width = 20,
+                Height = 20,
+                Animals = new List<Animal>
+                {
+                     new Animal()
+                }
+            };
+
+            ConsoleKey key = TextParameters.LionKey;
+
 
             //ACT
             var result = animalFactory.CreateAnimal(key, field);

@@ -5,13 +5,13 @@
     using System.Linq;
     using Savannah.Interfaces;
     using Savannah.Models;
+    using Savannah.Static;
 
     public class HerbivoreManager : IHerbivoreManager
     {
         private IAnimalValidator _validator;
         private ICalculations _math;
         private IConsoleFacade _facade;
-        private Random rnd;
         private IGenericAnimalManager _genericAnimal;
 
         public HerbivoreManager(IAnimalValidator generalAction, ICalculations math, IConsoleFacade facade, IGenericAnimalManager genericAnimal)
@@ -49,8 +49,8 @@
 
             while (!foundMove)
             {
-                int moveX = _facade.GetRandomMinMax(-1, 2);
-                int moveY = _facade.GetRandomMinMax(-1, 2);
+                int moveX = _facade.GetRandomMinMax(NumParameters.MovingNegative, NumParameters.MovingPositive);
+                int moveY = _facade.GetRandomMinMax(NumParameters.MovingNegative, NumParameters.MovingPositive);
 
                 int nextStepX = herbivore.CoordinateX + moveX;
                 int nextStepY = herbivore.CoordinateY + moveY;
@@ -72,10 +72,9 @@
         public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> additionalField, Field field)
         {
             double closestLocation = 0;
-
-            for (int coordX = -1; coordX < 2; coordX++)
+            for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingPositive; coordX++)
             {
-                for (int coordY = -1; coordY < 2; coordY++)
+                for (int coordY = NumParameters.MovingNegative; coordY < NumParameters.MovingPositive; coordY++)
                 {
                     int nextStepX = herbivore.CoordinateX + coordX;
                     int nextStepY = herbivore.CoordinateY + coordY;
