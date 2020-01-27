@@ -27,35 +27,36 @@
             }
 
             var newAnimal = new Animal();
+
             if (key == TextParameters.AntelopeKey)
-            {
-                newAnimal = new Antelope()
                 {
-                    Alive = true,
-                    CoordinateX = coordX,
-                    CoordinateY = coordY,
-                    Herbivore = true,
-                    Symbol = TextParameters.Antelope,
-                    Health = NumberParameters.MaxHealth,
-                };
-            }
-
-            else if (key == TextParameters.LionKey)
-            {
-                newAnimal = new Lion() {
-
-                    Alive = true,
-                    CoordinateX = coordX,
-                    CoordinateY = coordY,
-                    Herbivore = false,
-                    Symbol = TextParameters.Lion,
-                    Health = NumberParameters.MaxHealth,
-                };
-            }
+                    newAnimal = new Antelope()
+                    {
+                        Alive = true,
+                        CoordinateX = coordX,
+                        CoordinateY = coordY,
+                        Herbivore = true,
+                        Symbol = TextParameters.Antelope,
+                        MatingCount = 0,
+                        Health = NumberParameters.MaxHealth,
+                    };
+                }
+                else if (key == TextParameters.LionKey)
+                {
+                    newAnimal = new Lion()
+                    {
+                        Alive = true,
+                        CoordinateX = coordX,
+                        CoordinateY = coordY,
+                        Herbivore = false,
+                        Symbol = TextParameters.Lion,
+                        MatingCount = 0,
+                        Health = NumberParameters.MaxHealth,
+                    };
+                }
 
             field.Animals.Add(newAnimal);
             return newAnimal;
         }
     }
-
 }

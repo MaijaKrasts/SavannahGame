@@ -13,7 +13,6 @@ namespace Savannah.Tests
     {
         private Mock<IAnimalValidator> animalValidatorMock;
         private Mock<IConsoleFacade> facadeMock;
-        private Mock<TextParameters> texts;
 
         private AnimalFactory animalFactory;
 

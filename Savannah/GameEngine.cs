@@ -40,12 +40,16 @@
                 _display.DrawAnimals(field, additionalField);
 
                 var key = _facade.ConsoleKey();
-                _animalFactory.CreateAnimal(key, field);
 
                 if (key == TextParameters.EnterKey)
                 {
                     fieldCreated = true;
                     LifeCycle(field);
+                }
+
+                else if (key == TextParameters.AntelopeKey || key == TextParameters.LionKey)
+                {
+                    _animalFactory.CreateAnimal(key, field);
                 }
             }
         }
@@ -58,11 +62,11 @@
             while (!keyAvailabe)
             {
                 _genericAnimal.LocateEnemy(field);
+                _genericAnimal.LocateFriend(field);
                 _carnivore.ChooseTheMove(additionalField, field);
                 _herbivore.ChooseTheMove(additionalField, field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
-                _display.ResetValues(field, additionalField);
                 _facade.Sleep();
 
                 keyAvailabe = _facade.KeyAvailable();

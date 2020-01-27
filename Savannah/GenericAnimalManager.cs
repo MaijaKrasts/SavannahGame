@@ -8,8 +8,6 @@
 
     public class GenericAnimalManager : IGenericAnimalManager
     {
-        private int mateScore = 0;
-
         private IAnimalValidator _validator;
         private ICalculations _math;
         private IAnimalFactory _animalFactory;
@@ -61,38 +59,24 @@
 
         public void LocateFriend(Field field)
         {
-            double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
+            var animalList = field.Animals.ToList();
 
-            foreach (var animal in field.Animals)
+            foreach (var animal in animalList)
             {
-                for (int coordX = -1; coordX < 2; coordX++)
+                for (int coordX = -2; coordX < 3; coordX++)
                 {
-                    for (int coordY = -1; coordY < 2; coordY++)
+                    for (int coordY = -2; coordY < 3; coordY++)
                     {
-
                         int nextStepX = animal.CoordinateX + coordX;
                         int nextStepY = animal.CoordinateY + coordY;
 
-                        var isThereAnimal = _validator.AnimalExists(nextStepX, nextStepY, field);
-                        Animal closestAnimal = field.Animals.Find(a => a.CoordinateX == nextStepX && a.CoordinateY == nextStepY);
-
-                        if (closestAnimal.Herbivore == animal.Herbivore)
+                        if(coordX != 0 && coordY != 0)
                         {
-                            if (animal.ClosestMate != null)
+                            Animal closestAnimal = field.Animals.Find(a => a.CoordinateX == nextStepX && a.CoordinateY == nextStepY);
+
+                            if (_validator.AnimalExists(nextStepX, nextStepY, field) && closestAnimal.Herbivore == animal.Herbivore)
                             {
-                                if (animal.ClosestMate == closestAnimal)
-                                {
-                                    mateScore++;
-                                    if (mateScore == 3)
-                                    {
-                                        Breed(animal);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                animal.ClosestMate = closestAnimal;
-                                mateScore = 1;
+                                BreedingValidator(animal, closestAnimal, field);
                             }
                         }
                     }
@@ -100,17 +84,51 @@
             }
         }
 
-        public void Breed(Animal animal)
+        public bool BreedingValidator(Animal animal, Animal closestAnimal, Field field)
         {
-            IncreaseHealth(animal);
-            IncreaseHealth(animal.ClosestMate);
+            bool isAnimalBreedable = false;
 
-            //if(animal.Herbivore = true)
-            //{
-            //    _animalFactory.
-            //}
+            if (animal.ClosestMate == null)
+                {
+                    animal.ClosestMate = closestAnimal;
+                    animal.MatingCount = 1;
+                }
+            else if (animal.ClosestMate != null)
+                {
+                    if (animal.ClosestMate == closestAnimal)
+                    {
+                        animal.MatingCount++;
+                        if (animal.MatingCount == 3)
+                        {
+                            isAnimalBreedable = true;
+                            Breed(animal, field);
+                        animal.MatingCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        animal.ClosestMate = closestAnimal;
+                        animal.MatingCount = 1;
+                    }
+                }
 
+            return isAnimalBreedable;
+        }
 
+        public Animal Breed(Animal animal, Field field)
+        {
+            var newAnimal = new Animal();
+
+            if (animal.Herbivore == true)
+            {
+                newAnimal = _animalFactory.CreateAnimal(TextParameters.AntelopeKey, field);
+            }
+            else if (animal.Herbivore == false)
+            {
+                newAnimal = _animalFactory.CreateAnimal(TextParameters.LionKey, field);
+            }
+
+            return newAnimal;
         }
 
         public void IncreaseHealth(Animal animal)

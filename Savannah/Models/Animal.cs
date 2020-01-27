@@ -18,6 +18,8 @@ namespace Savannah.Models
 
         public Animal ClosestMate { get ; set; }
 
+        public int MatingCount { get; set; }
+
         public int Health {get; set; }
     }
 }
