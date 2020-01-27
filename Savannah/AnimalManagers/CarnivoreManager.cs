@@ -81,7 +81,9 @@
                     int nextStepY = carnivore.CoordinateY + coordY;
 
                     var validMove = _validator.ValidateMove(nextStepX, nextStepY, field)
-                        && !_validator.CarnivoreExists(nextStepX, nextStepY, field);
+                        && !_validator.CarnivoreExists(nextStepX, nextStepY, field)
+                        && coordX != 0
+                        && coordY != 0;
 
                     if (validMove)
                     {

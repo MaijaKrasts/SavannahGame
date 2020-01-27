@@ -111,30 +111,39 @@
                 }
             else if (animal.ClosestMate != null)
                 {
-                    if (animal.ClosestMate == closestAnimal)
+                if (animal.ClosestMate == closestAnimal)
+                {
+                    animal.MatingCount++;
+                    if (animal.MatingCount == NumParameters.MaxMatingCount)
                     {
-                        animal.MatingCount++;
-                        if (animal.MatingCount == NumParameters.MaxMatingCount)
-                        {
-                            isAnimalBreedable = true;
-                            Breed(animal, field);
-                            animal.MatingCount = NumParameters.InitialMatingCount;
-                        }
+                        isAnimalBreedable = true;
+                        Breed(animal, field);
                     }
-                    else
-                    {
-                        animal.ClosestMate = closestAnimal;
-                        animal.MatingCount = NumParameters.ActiveMatingCount;
                 }
+                else
+                {
+                    animal.ClosestMate = closestAnimal;
+                    animal.MatingCount = NumParameters.ActiveMatingCount;
                 }
+            }
 
             return isAnimalBreedable;
         }
 
         public Animal Breed(Animal animal, Field field)
         {
+            ResetMatingValues(animal);
+
             var newAnimal = _animalFactory.CreateAnimal(animal.Key, field);
             return newAnimal;
+        }
+
+        private void ResetMatingValues(Animal animal)
+        {
+            animal.ClosestMate.ClosestMate = null;
+            animal.ClosestMate.MatingCount = NumParameters.InitialMatingCount;
+            animal.ClosestMate = null;
+            animal.MatingCount = NumParameters.InitialMatingCount;
         }
 
         public void IncreaseHealth(Animal animal)
