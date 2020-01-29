@@ -5,6 +5,6 @@
 
     public interface ICarnivoreManager : IAnimalManager
     {
-        void EatVictim(Animal carnivore, List<Animal> additionalField);
+        void EatVictim(Animal carnivore, Field field);
     }
 }

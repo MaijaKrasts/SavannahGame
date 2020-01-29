@@ -1,6 +1,5 @@
 ﻿namespace Savannah
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Savannah.Interfaces;
@@ -24,7 +23,7 @@
 
         public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
         {
-            var carnivoreList = field.Animals.FindAll(a => a.Herbivore == false).ToList();
+            var carnivoreList = additionalField.FindAll(a => a.Herbivore == false).ToList();
 
             foreach (var carnivore in carnivoreList)
             {
@@ -63,8 +62,8 @@
                     foundMove = true;
                 }
 
-                carnivore.CoordinateX = nextStepX;
-                carnivore.CoordinateY = nextStepY;
+                _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore, field);
+
             }
 
             return additionalField;
@@ -91,28 +90,26 @@
                         if (betterLocation <= initialLocation)
                         {
                             initialLocation = betterLocation;
-                            carnivore.CoordinateX = nextStepX;
-                            carnivore.CoordinateY = nextStepY;
+                            _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore, field);
 
                             if (_validator.HerbivoreExists(nextStepX, nextStepY, field))
                             {
-                                EatVictim(carnivore, additionalField);
-
-                                carnivore.CoordinateX = nextStepX;
-                                carnivore.CoordinateY = nextStepY;
+                                EatVictim(carnivore, field);
+                                break;
                             }
                         }
                     }
                 }
             }
+
             return additionalField;
         }
 
-        public void EatVictim(Animal carnivore, List<Animal> additionalField)
+        public void EatVictim(Animal carnivore, Field field)
         {
-            //additionalField.Remove(carnivore.ClosestEnemy);
-            carnivore.ClosestEnemy.Alive = false;
-            //carnivore.ClosestEnemy = null;
+            var savedAnimal = _genericAnimal.FindInField(field, carnivore.CoordinateX, carnivore.CoordinateY);
+            savedAnimal.ClosestEnemy.Alive = false;
+            savedAnimal.ClosestEnemy = null;
         }
     }
 }

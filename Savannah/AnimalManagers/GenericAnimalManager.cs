@@ -43,12 +43,12 @@
             return animal;
         }
 
-        public void LocateEnemy(Field field)
+        public void LocateEnemy(Field field, List<Animal> additionslField)
         {
             double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
 
-            var carnivoreList = field.Animals.FindAll(a => a.Herbivore == false).ToList();
-            var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
+            var carnivoreList = additionslField.FindAll(a => a.Herbivore == false).ToList();
+            var herbivoreList = additionslField.FindAll(a => a.Herbivore == true).ToList();
 
             foreach (var carnivore in carnivoreList)
             {
@@ -61,26 +61,40 @@
                         if (location < NumParameters.VisionRange)
                         {
                             ultimateLocation = location;
-                            herbivore.ClosestEnemy = carnivore;
-                            carnivore.ClosestEnemy = herbivore;
+                            SetEnemies(carnivore, herbivore, field);
                         }
                         else
                         {
-                            carnivore.ClosestEnemy = null;
-                            herbivore.ClosestEnemy = null;
+                            ResetEnemies(carnivore, herbivore, field);
                         }
                     }
                 }
 
-               ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
+                ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
             }
         }
 
-        public void LocateFriend(Field field)
+        public void SetEnemies(Animal firstAnimal, Animal secondAnimal, Field field)
         {
-            var animalList = field.Animals.ToList();
+            var savedFirstAnimal = FindInField(field, firstAnimal.CoordinateX, firstAnimal.CoordinateY);
+            var savedSecondAnimal = FindInField(field, secondAnimal.CoordinateX, secondAnimal.CoordinateY);
 
-            foreach (var animal in animalList)
+            savedFirstAnimal.ClosestEnemy = savedSecondAnimal;
+            savedSecondAnimal.ClosestEnemy = savedFirstAnimal;
+        }
+
+        public void ResetEnemies(Animal firstAnimal, Animal secondAnimal, Field field)
+        {
+            var savedFirstAnimal = FindInField(field, firstAnimal.CoordinateX, firstAnimal.CoordinateY);
+            var savedSecondAnimal = FindInField(field, secondAnimal.CoordinateX, secondAnimal.CoordinateY);
+
+            savedFirstAnimal.ClosestEnemy = null;
+            savedSecondAnimal.ClosestEnemy = null;
+        }
+
+        public void LocateFriend(Field field, List<Animal> additionalField)
+        {
+            foreach (var animal in additionalField)
             {
                 for (int coordX = NumParameters.BreedingNegative; coordX < NumParameters.BreedingPositive; coordX++)
                 {
@@ -99,7 +113,8 @@
 
                             if (validBreeder)
                             {
-                                BreedingValidator(animal, closestAnimal, field);
+                                var currentAnimal = FindInField(field, animal.CoordinateX, animal.CoordinateY);
+                                BreedingValidator(currentAnimal, closestAnimal, field);
                             }
                         }
                     }
@@ -145,7 +160,7 @@
             return newAnimal;
         }
 
-        private void ResetMatingValues(Animal animal)
+        public void ResetMatingValues(Animal animal)
         {
             animal.ClosestMate.ClosestMate = null;
             animal.ClosestMate.MatingCount = NumParameters.InitialMatingCount;
@@ -168,13 +183,13 @@
             }
         }
 
-        public List<Animal> TakeAStep(int nextStepX, int nextStepY, Animal animal, List<Animal> additionalAnimal)
+        public Animal TakeAStep(int nextStepX, int nextStepY, Animal animal, Field field)
         {
-            var savedAnimal = FindInList(additionalAnimal, animal.CoordinateX, animal.CoordinateY);
+            var savedAnimal = FindInField(field, animal.CoordinateX, animal.CoordinateY);
             savedAnimal.CoordinateX = nextStepX;
             savedAnimal.CoordinateY = nextStepY;
 
-            return additionalAnimal;
+            return savedAnimal;
         }
     }
 }

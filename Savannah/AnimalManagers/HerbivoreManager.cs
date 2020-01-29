@@ -24,7 +24,7 @@
 
         public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
         {
-            var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
+            var herbivoreList = additionalField.FindAll(a => a.Herbivore == true).ToList();
 
             foreach (var herbivore in herbivoreList)
             {
@@ -63,8 +63,7 @@
                     foundMove = true;
                 }
 
-                herbivore.CoordinateX = nextStepX;
-                herbivore.CoordinateY = nextStepY;
+                _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, field);
             }
 
             return additionalAnimal;
@@ -90,10 +89,7 @@
                         {
                             closestLocation = betterLocation;
 
-                            herbivore.CoordinateX = nextStepX;
-                            herbivore.CoordinateY = nextStepY;
-
-                            //additionalField = _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, additionalField);
+                            _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, field);
                         }
                     }
                 }

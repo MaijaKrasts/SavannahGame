@@ -22,7 +22,7 @@
             {
                 for (int currentColumn = 0; currentColumn < field.Width; currentColumn++)
                 {
-                    var currentAnimal = _genericAnimal.FindInList(additionalAnimal, currentColumn, currentRow);
+                    var currentAnimal = _genericAnimal.FindInField (field, currentColumn, currentRow);
 
                     if (currentAnimal == null)
                     {
@@ -42,7 +42,7 @@
 
         public void ResetValues(Field field, List<Animal> additionalAnimal)
         {
-            field.Animals = additionalAnimal;
+            
         }
     }
 }

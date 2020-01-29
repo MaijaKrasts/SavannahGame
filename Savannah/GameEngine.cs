@@ -66,29 +66,15 @@
 
             while (!keyAvailabe)
             {
-                _genericAnimal.LocateEnemy(field);
-                _genericAnimal.LocateFriend(field);
+                _genericAnimal.LocateEnemy(field, additionalField);
+                _genericAnimal.LocateFriend(field, additionalField);
                 _carnivore.ChooseTheMove(additionalField, field);
                 _herbivore.ChooseTheMove(additionalField, field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
-                ResetValues(additionalField);
                 _facade.Sleep();
                 keyAvailabe = _facade.KeyAvailable();
             }
-        }
-
-        public void ResetValues(List<Animal> additionalField)
-        {
-            foreach (var animal in additionalField)
-            {
-                if (animal.Alive == false)
-                {
-                    additionalField.Remove(animal);
-                }
-            }
-
-            field.Animals = additionalField;
         }
     }
 }
