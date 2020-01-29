@@ -1,8 +1,6 @@
 ﻿namespace Savannah
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
+
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -32,12 +30,11 @@
         public void CreateGamefield()
         {
             field = _fieldFactory.CreateField();
-            var additionalField = _genericAnimal.AdditionalAnimalList(field);
             bool fieldCreated = false;
 
             while (!fieldCreated)
             {
-                additionalField = _genericAnimal.AdditionalAnimalList(field);
+                var additionalField = _genericAnimal.AdditionalAnimalList(field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
 
