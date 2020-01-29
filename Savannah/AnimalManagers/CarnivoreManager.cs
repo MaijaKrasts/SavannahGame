@@ -63,7 +63,8 @@
                     foundMove = true;
                 }
 
-                _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore);
+                carnivore.CoordinateX = nextStepX;
+                carnivore.CoordinateY = nextStepY;
             }
 
             return additionalField;
@@ -73,45 +74,45 @@
         {
             var initialLocation = _math.Vector(carnivore.CoordinateX, carnivore.CoordinateY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
 
-            for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingNegative; coordX++)
+            for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingPositive; coordX++)
             {
-                for (int coordY = NumParameters.MovingNegative; coordY < NumParameters.MovingNegative; coordY++)
+                for (int coordY = NumParameters.MovingNegative; coordY < NumParameters.MovingPositive; coordY++)
                 {
                     int nextStepX = carnivore.CoordinateX + coordX;
                     int nextStepY = carnivore.CoordinateY + coordY;
 
                     var validMove = _validator.ValidateMove(nextStepX, nextStepY, field)
                         && !_validator.CarnivoreExists(nextStepX, nextStepY, field)
-                        && coordX != 0
-                        && coordY != 0;
+                        && (coordX != 0 && coordY != 0);
 
                     if (validMove)
                     {
                         double betterLocation = _math.Vector(nextStepX, nextStepY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
-                        if (betterLocation < initialLocation)
+                        if (betterLocation <= initialLocation)
                         {
                             initialLocation = betterLocation;
-                            _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore);
+                            carnivore.CoordinateX = nextStepX;
+                            carnivore.CoordinateY = nextStepY;
 
-                            if (_validator.HerbivoreExists(carnivore.CoordinateY, carnivore.CoordinateY, field))
+                            if (_validator.HerbivoreExists(nextStepX, nextStepY, field))
                             {
                                 EatVictim(carnivore, additionalField);
-                                break;
+
+                                carnivore.CoordinateX = nextStepX;
+                                carnivore.CoordinateY = nextStepY;
                             }
                         }
                     }
                 }
             }
-
             return additionalField;
         }
 
-        public Animal EatVictim(Animal carnivore, List<Animal> additionalField)
+        public void EatVictim(Animal carnivore, List<Animal> additionalField)
         {
-            additionalField.Remove(carnivore.ClosestEnemy);
+            //additionalField.Remove(carnivore.ClosestEnemy);
             carnivore.ClosestEnemy.Alive = false;
-
-            return carnivore.ClosestEnemy;
+            //carnivore.ClosestEnemy = null;
         }
     }
 }

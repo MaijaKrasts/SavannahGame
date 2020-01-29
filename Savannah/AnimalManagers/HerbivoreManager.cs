@@ -43,7 +43,7 @@
             return additionalField;
         }
 
-        public List<Animal> MoveWithoutEnemies(Animal herbivore, List<Animal> additionalField, Field field)
+        public List<Animal> MoveWithoutEnemies(Animal herbivore, List<Animal> additionalAnimal, Field field)
         {
             bool foundMove = false;
 
@@ -63,10 +63,11 @@
                     foundMove = true;
                 }
 
-                _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore);
+                herbivore.CoordinateX = nextStepX;
+                herbivore.CoordinateY = nextStepY;
             }
 
-            return additionalField;
+            return additionalAnimal;
         }
 
         public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> additionalField, Field field)
@@ -88,7 +89,11 @@
                         if (betterLocation >= closestLocation)
                         {
                             closestLocation = betterLocation;
-                            _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore);
+
+                            herbivore.CoordinateX = nextStepX;
+                            herbivore.CoordinateY = nextStepY;
+
+                            //additionalField = _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, additionalField);
                         }
                     }
                 }

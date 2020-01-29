@@ -1,6 +1,7 @@
 ﻿namespace Savannah
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using Savannah.Interfaces;
     using Savannah.Models;
@@ -36,6 +37,7 @@
 
             while (!fieldCreated)
             {
+                additionalField = _genericAnimal.AdditionalAnimalList(field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
 
@@ -43,6 +45,7 @@
 
                 var animalKey = key == TextParameters.AntelopeKey
                              || key == TextParameters.LionKey;
+
 
                 if (key == TextParameters.EnterKey)
                 {
@@ -69,10 +72,23 @@
                 _herbivore.ChooseTheMove(additionalField, field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field, additionalField);
+                ResetValues(additionalField);
                 _facade.Sleep();
-
                 keyAvailabe = _facade.KeyAvailable();
             }
+        }
+
+        public void ResetValues(List<Animal> additionalField)
+        {
+            foreach (var animal in additionalField)
+            {
+                if (animal.Alive == false)
+                {
+                    additionalField.Remove(animal);
+                }
+            }
+
+            field.Animals = additionalField;
         }
     }
 }

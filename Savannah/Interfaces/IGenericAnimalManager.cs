@@ -23,7 +23,7 @@
 
         void DecreaseHealth(Animal animal);
 
-        void TakeAStep(int nextStepX, int nextStepY, Animal animal);
+        List<Animal> TakeAStep(int nextStepX, int nextStepY, Animal animal, List<Animal> additionalAnimal);
 
     }
 }

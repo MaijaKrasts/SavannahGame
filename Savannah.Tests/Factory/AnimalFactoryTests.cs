@@ -40,6 +40,7 @@ namespace Savannah.Tests
                 }
             };
 
+            facadeMock.Setup(f => f.GetRandomMinMax(0, 20)).Returns(0);
             ConsoleKey key = TextParameters.LionKey;
 
             //ACT
@@ -64,14 +65,30 @@ namespace Savannah.Tests
                 }
             };
 
+            int coordX = 3;
+            int coordY = 3;
+
+            facadeMock.Setup(f => f.GetRandomMinMax(0, 20)).Returns(3);
+
             ConsoleKey key = TextParameters.LionKey;
 
-
+            Lion lion = new Lion();
+            lion.Alive = true;
+            lion.ClosestEnemy = null;
+            lion.ClosestMate = null;
+            lion.CoordinateX = coordX;
+            lion.CoordinateY = coordY;
+            lion.Health = NumParameters.MaxHealth;
+            lion.Herbivore = false;
+            lion.MatingCount = NumParameters.InitialMatingCount;
+            lion.Symbol = "L";
+            lion.Key = ConsoleKey.L;
+            
             //ACT
             var result = animalFactory.CreateAnimal(key, field);
 
             // ASSERT
-            Assert.IsInstanceOf<Animal>(result);
+            Assert.AreEqual(lion.Herbivore, result.Herbivore);
         }
     }
 }

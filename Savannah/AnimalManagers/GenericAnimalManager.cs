@@ -21,9 +21,14 @@
 
         public List<Animal> AdditionalAnimalList(Field field)
         {
-            List<Animal> additionalAnimals = new List<Animal>();
-            additionalAnimals = field.Animals;
-            return additionalAnimals;
+            List<Animal> additionalAnimal = new List<Animal>();
+
+            foreach (var animal in field.Animals)
+            {
+                additionalAnimal.Add(animal);
+            }
+
+            return additionalAnimal;
         }
 
         public Animal FindInField(Field field, int coordX, int coordY)
@@ -42,16 +47,16 @@
         {
             double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
 
-            var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
             var carnivoreList = field.Animals.FindAll(a => a.Herbivore == false).ToList();
+            var herbivoreList = field.Animals.FindAll(a => a.Herbivore == true).ToList();
 
-            foreach (var herbivore in herbivoreList)
+            foreach (var carnivore in carnivoreList)
             {
-                foreach (var carnivore in carnivoreList)
+                foreach (var herbivore in herbivoreList)
                 {
                     var location = _math.Vector(herbivore.CoordinateX, carnivore.CoordinateX, herbivore.CoordinateY, carnivore.CoordinateY);
 
-                    if (location <= ultimateLocation)
+                    if (location < ultimateLocation)
                     {
                         if (location < NumParameters.VisionRange)
                         {
@@ -66,6 +71,8 @@
                         }
                     }
                 }
+
+               ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
             }
         }
 
@@ -161,10 +168,13 @@
             }
         }
 
-        public void TakeAStep(int nextStepX, int nextStepY, Animal animal)
+        public List<Animal> TakeAStep(int nextStepX, int nextStepY, Animal animal, List<Animal> additionalAnimal)
         {
-            animal.CoordinateX = nextStepX;
-            animal.CoordinateY = nextStepY;
+            var savedAnimal = FindInList(additionalAnimal, animal.CoordinateX, animal.CoordinateY);
+            savedAnimal.CoordinateX = nextStepX;
+            savedAnimal.CoordinateY = nextStepY;
+
+            return additionalAnimal;
         }
     }
 }
