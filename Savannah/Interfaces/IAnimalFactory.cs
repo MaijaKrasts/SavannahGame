@@ -1,6 +1,7 @@
 ﻿namespace Savannah.Interfaces
 {
     using System;
+    using AnimalClassLibrary;
     using Savannah.Models;
 
     public interface IAnimalFactory

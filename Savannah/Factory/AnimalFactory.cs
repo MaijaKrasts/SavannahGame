@@ -1,6 +1,9 @@
 ﻿namespace Savannah
 {
     using System;
+    using AnimalClassLibrary;
+    using AntelopeClassLibrary;
+    using LionClassLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -35,7 +38,7 @@
                         Alive = true,
                         CoordinateX = coordX,
                         CoordinateY = coordY,
-                        Herbivore = true,
+                        IsHerbivore = true,
                         Symbol = TextParameters.Antelope,
                         Key = TextParameters.AntelopeKey,
                         MatingCount = 0,
@@ -49,7 +52,7 @@
                         Alive = true,
                         CoordinateX = coordX,
                         CoordinateY = coordY,
-                        Herbivore = false,
+                        IsHerbivore = false,
                         Symbol = TextParameters.Lion,
                         Key = TextParameters.LionKey,
                         MatingCount = 0,

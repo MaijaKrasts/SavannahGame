@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using AnimalClassLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -43,8 +44,8 @@
         {
             double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
 
-            var carnivoreList = searchList.FindAll(a => a.Herbivore == false).ToList();
-            var herbivoreList = searchList.FindAll(a => a.Herbivore == true).ToList();
+            var carnivoreList = searchList.FindAll(a => a.IsHerbivore == false).ToList();
+            var herbivoreList = searchList.FindAll(a => a.IsHerbivore == true).ToList();
 
             foreach (var carnivore in carnivoreList)
             {
@@ -103,7 +104,7 @@
                         {
                             Animal closestAnimal = FindInField(field, nextStepX, nextStepY);
                             var validBreeder = _validator.AnimalExists(nextStepX, nextStepY, field)
-                                && closestAnimal.Herbivore == animal.Herbivore;
+                                && closestAnimal.IsHerbivore == animal.IsHerbivore;
 
                             if (validBreeder)
                             {

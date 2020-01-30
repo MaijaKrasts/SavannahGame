@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\IAnimal.cs" />
+    <Compile Remove="Models\Animal.cs" />
+    <Compile Remove="Models\Antelope.cs" />
+    <Compile Remove="Models\Lion.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link="Config\.editorconfig" />
   </ItemGroup>
 
@@ -21,6 +28,12 @@
 
   <ItemGroup>
     <Folder Include="Config\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnimalClassLibrary\AnimalClassLibrary.csproj" />
+    <ProjectReference Include="..\AntelopeClassLibrary\AntelopeClassLibrary.csproj" />
+    <ProjectReference Include="..\CarnivoreClassLibrary\LionClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

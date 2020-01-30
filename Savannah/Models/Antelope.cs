@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnimalClassLibrary;
+using System;
 
 namespace Savannah.Models
 {

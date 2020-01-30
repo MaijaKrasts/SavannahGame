@@ -1,5 +1,6 @@
 ﻿namespace Savannah.Models
-{ 
+{
+    using AnimalClassLibrary;
     using System.Collections.Generic;
 
     public class Field

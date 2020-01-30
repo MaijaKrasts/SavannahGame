@@ -1,9 +1,7 @@
-﻿using AnimalClassLibrary;
-using Savannah.Interfaces;
-using System;
-
-namespace Savannah.Models
+﻿namespace AnimalClassLibrary
 {
+    using System;
+
     [Serializable]
     public class Animal : IAnimal
     {

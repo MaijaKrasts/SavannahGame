@@ -1,7 +1,6 @@
-﻿using Savannah.Models;
-using System;
+﻿using System;
 
-namespace Savannah.Interfaces
+namespace AnimalClassLibrary
 {
     public interface IAnimal
     {

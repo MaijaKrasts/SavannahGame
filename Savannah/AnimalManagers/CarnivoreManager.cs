@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using AnimalClassLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -23,7 +24,7 @@
 
         public List<Animal> ChooseTheMove(List<Animal> seachList, Field field)
         {
-            var carnivoreList = seachList.FindAll(a => a.Herbivore == false).ToList();
+            var carnivoreList = seachList.FindAll(a => a.IsHerbivore == false).ToList();
 
             foreach (var carnivore in carnivoreList)
             {
