@@ -46,6 +46,8 @@
         public List<Animal> MoveWithoutEnemies(Animal herbivore, List<Animal> searchList, Field field)
         {
             bool foundMove = false;
+            int bestStepX = herbivore.CoordinateX;
+            int bestStepY = herbivore.CoordinateY;
 
             while (!foundMove)
             {
@@ -61,10 +63,12 @@
                 if (validMove)
                 {
                     foundMove = true;
+                    bestStepX = nextStepX;
+                    bestStepY = nextStepY;
                 }
-
-                _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, field);
             }
+
+            _genericAnimal.TakeAStep(bestStepX, bestStepY, herbivore, field);
 
             return searchList;
         }
@@ -72,6 +76,9 @@
         public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> searchList, Field field)
         {
             double closestLocation = 0;
+            int bestStepX = herbivore.CoordinateX;
+            int bestStepY = herbivore.CoordinateY;
+
             for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingPositive; coordX++)
             {
                 for (int coordY = NumParameters.MovingNegative; coordY < NumParameters.MovingPositive; coordY++)
@@ -89,11 +96,14 @@
                         {
                             closestLocation = betterLocation;
 
-                            _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, field);
+                            bestStepX = nextStepX;
+                            bestStepY = nextStepY;
                         }
                     }
                 }
             }
+
+            _genericAnimal.TakeAStep(bestStepX, bestStepY, herbivore, field);
             return searchList;
         }
     }

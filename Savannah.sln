@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Savannah.Tests", "Savannah.Tests\Savannah.Tests.csproj", "{8C46B5AA-AD92-4671-AD5D-0946C0233CE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarnivoreClassLibrary", "CarnivoreClassLibrary\CarnivoreClassLibrary.csproj", "{C6DDB399-E98B-4E9C-820D-C0DAAAAAFDA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionClassLibrary", "CarnivoreClassLibrary\LionClassLibrary.csproj", "{C6DDB399-E98B-4E9C-820D-C0DAAAAAFDA0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClassLib", "ClassLib", "{646DF547-D092-4301-B602-5DDBFA611CD7}"
 EndProject

@@ -76,20 +76,14 @@
             var savedSecondAnimal = FindInField(field, secondAnimal.CoordinateX, secondAnimal.CoordinateY);
 
             savedFirstAnimal.ClosestEnemy = savedSecondAnimal;
-            savedSecondAnimal.ClosestEnemy = savedFirstAnimal;
         }
 
         public void ResetEnemies(Animal firstAnimal, Animal secondAnimal, Field field)
         {
 
             var savedFirstAnimal = FindInField(field, firstAnimal.CoordinateX, firstAnimal.CoordinateY);
-            var savedSecondAnimal = FindInField(field, secondAnimal.CoordinateX, secondAnimal.CoordinateY);
-            if (savedFirstAnimal != null && savedSecondAnimal != null)
-            {
-                savedFirstAnimal.ClosestEnemy = null;
-                savedSecondAnimal.ClosestEnemy = null;
-            }
 
+            savedFirstAnimal.ClosestEnemy = null;
         }
 
         public void LocateFriend(Field field, List<Animal> searchList)
@@ -185,12 +179,15 @@
 
         public Animal TakeAStep(int nextStepX, int nextStepY, Animal animal, Field field)
         {
-            var savedAnimal = FindInField(field, animal.CoordinateX, animal.CoordinateY);
-            if (savedAnimal != null)
+            var savedAnimal = FindInField(field, animal.CoordinateY, animal.CoordinateX);
+
+            if (savedAnimal == null)
             {
-                savedAnimal.CoordinateX = nextStepX;
-                savedAnimal.CoordinateY = nextStepY;
+                savedAnimal = FindInField(field, animal.CoordinateX, animal.CoordinateY);
             }
+
+            savedAnimal.CoordinateX = nextStepX;
+            savedAnimal.CoordinateY = nextStepY;
 
             return savedAnimal;
         }

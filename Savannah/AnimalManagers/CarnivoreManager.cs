@@ -45,6 +45,8 @@
         public List<Animal> MoveWithoutEnemies(Animal carnivore, List<Animal> searchList, Field field)
         {
             bool foundMove = false;
+            int bestStepX = carnivore.CoordinateX;
+            int bestStepY = carnivore.CoordinateY;
 
             while (!foundMove)
             {
@@ -60,11 +62,12 @@
                 if (validMove)
                 {
                     foundMove = true;
+                    bestStepX = nextStepX;
+                    bestStepY = nextStepY;
                 }
-
-                _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore, field);
-
             }
+
+            _genericAnimal.TakeAStep(bestStepX, bestStepY, carnivore, field);
 
             return searchList;
         }
@@ -72,6 +75,8 @@
         public List<Animal> MoveWithEnemies(Animal carnivore, List<Animal> searchList, Field field)
         {
             var initialLocation = _math.Vector(carnivore.CoordinateX, carnivore.CoordinateY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
+            int bestStepX = carnivore.CoordinateX;
+            int bestStepY = carnivore.CoordinateY;
 
             for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingPositive; coordX++)
             {
@@ -90,9 +95,11 @@
                         if (betterLocation <= initialLocation)
                         {
                             initialLocation = betterLocation;
-                            _genericAnimal.TakeAStep(nextStepX, nextStepY, carnivore, field);
 
-                            if (_validator.HerbivoreExists(nextStepX, nextStepY, field))
+                            bestStepX = carnivore.CoordinateX + coordX;
+                            bestStepY = carnivore.CoordinateY + coordY;
+
+                            if (_validator.HerbivoreExists(bestStepX, bestStepY, field))
                             {
                                 EatVictim(carnivore, field);
                                 break;
@@ -101,6 +108,8 @@
                     }
                 }
             }
+
+            _genericAnimal.TakeAStep(bestStepX, bestStepY, carnivore, field);
 
             return searchList;
         }

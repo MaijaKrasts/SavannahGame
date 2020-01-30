@@ -65,8 +65,8 @@
                 var searchList = _genericAnimal.CopyList(field);
                 _genericAnimal.LocateEnemy(field, searchList);
                 _genericAnimal.LocateFriend(field, searchList);
-                _carnivore.ChooseTheMove(searchList, field);
                 _herbivore.ChooseTheMove(searchList, field);
+                _carnivore.ChooseTheMove(searchList, field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field);
                 _facade.Sleep();
