@@ -1,7 +1,7 @@
-﻿using AnimalClassLibrary;
+﻿using AnimalLibrary;
 using System;
 
-namespace AntelopeClassLibrary
+namespace AntelopeLibrary
 {
     [Serializable]
     public class Antelope : Animal

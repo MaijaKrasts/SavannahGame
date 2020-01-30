@@ -1,6 +1,6 @@
-﻿namespace LionClassLibrary
+﻿namespace LionLibrary
 {
-    using AnimalClassLibrary;
+    using AnimalLibrary;
     using System;
 
     [Serializable]

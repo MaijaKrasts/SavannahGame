@@ -31,9 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnimalClassLibrary\AnimalClassLibrary.csproj" />
-    <ProjectReference Include="..\AntelopeClassLibrary\AntelopeClassLibrary.csproj" />
-    <ProjectReference Include="..\CarnivoreClassLibrary\LionClassLibrary.csproj" />
+    <ProjectReference Include="..\AnimalClassLibrary\AnimalLibrary.csproj" />
+    <ProjectReference Include="..\AntelopeClassLibrary\AntelopeLibrary.csproj" />
+    <ProjectReference Include="..\CarnivoreClassLibrary\LionLibrary.csproj" />
   </ItemGroup>
 
 </Project>

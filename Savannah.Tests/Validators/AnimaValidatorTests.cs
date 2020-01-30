@@ -1,3 +1,4 @@
+using AnimalLibrary;
 using NUnit.Framework;
 using Savannah.Models;
 using System;
@@ -72,7 +73,7 @@ namespace Savannah.Tests
                      {
                          CoordinateX = coordX,
                          CoordinateY = coordY,
-                         Herbivore = false,
+                         IsHerbivore = false,
                      }
                 }
             };
@@ -113,7 +114,7 @@ namespace Savannah.Tests
                      {
                          CoordinateX = coordX,
                          CoordinateY = coordY,
-                         Herbivore = true
+                         IsHerbivore = true
                      }
                 }
             };

@@ -14,10 +14,6 @@
 
         void Clear();
 
-        int GetRandomMinMax(int minValue, int maxValue);
-
-        int GetRandom();
-
         bool KeyAvailable();
 
         void SetCursorPosition();

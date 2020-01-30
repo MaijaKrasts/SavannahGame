@@ -1,9 +1,7 @@
 ﻿namespace Savannah
 {
     using System;
-    using AnimalClassLibrary;
-    using AntelopeClassLibrary;
-    using LionClassLibrary;
+    using AnimalLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -32,33 +30,19 @@
             var newAnimal = new Animal();
 
             if (key == TextParameters.AntelopeKey)
-                {
-                    newAnimal = new Antelope()
-                    {
-                        Alive = true,
-                        CoordinateX = coordX,
-                        CoordinateY = coordY,
-                        IsHerbivore = true,
-                        Symbol = TextParameters.Antelope,
-                        Key = TextParameters.AntelopeKey,
-                        MatingCount = 0,
-                        Health = NumParameters.MaxHealth,
-                    };
-                }
+            {
+                newAnimal = new AntelopeLibrary.Antelope();
+            }
             else if (key == TextParameters.LionKey)
-                {
-                    newAnimal = new Lion()
-                    {
-                        Alive = true,
-                        CoordinateX = coordX,
-                        CoordinateY = coordY,
-                        IsHerbivore = false,
-                        Symbol = TextParameters.Lion,
-                        Key = TextParameters.LionKey,
-                        MatingCount = 0,
-                        Health = NumParameters.MaxHealth,
-                    };
-                }
+            {
+                newAnimal = new LionLibrary.Lion();
+            }
+
+            newAnimal.Alive = true;
+            newAnimal.CoordinateX = coordX;
+            newAnimal.CoordinateY = coordY;
+            newAnimal.MatingCount = 0;
+            newAnimal.Health = NumParameters.MaxHealth;
 
             field.Animals.Add(newAnimal);
             return newAnimal;

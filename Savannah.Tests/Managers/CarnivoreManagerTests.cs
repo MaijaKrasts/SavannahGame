@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AnimalLibrary;
+using Moq;
 using NUnit.Framework;
 using Savannah.Interfaces;
 using Savannah.Models;
@@ -33,7 +34,7 @@ namespace Savannah.Tests.Managers
         {
             // ARRANGE
 
-            List<Animal> additionalField = new List<Animal>();
+            List<Animal> searchList = new List<Animal>();
 
             Field field = new Field()
             {
@@ -44,7 +45,7 @@ namespace Savannah.Tests.Managers
 
             // ACT
 
-            var result = carnivoreManager.ChooseTheMove(additionalField, field);
+            var result = carnivoreManager.ChooseTheMove(searchList, field);
 
             //ASSERT
 
@@ -52,27 +53,64 @@ namespace Savannah.Tests.Managers
 
         }
 
-        [Test]
-        public void ChooseTheMove_WhenFieldIsNull_ShouldReturnNullReferenceException()
+
+        //dont know how to finish this..
+        /*
+        public void ChooseTheMove_WhenAllInputIsCorrect_ReturnNotSame_DueToChangedField()
         {
             // ARRANGE
 
-            List<Animal> additionalField = new List<Animal>();
+            List<Animal> searchList = new List<Animal>();
 
-            Field field = null;
+            Field field = new Field()
+            {
+                Width = 20,
+                Height = 20,
+                Animals = new List<Animal>()
+
+            };
+
+            Animal carni = new Animal()
+            {
+                CoordinateX = 1,
+                CoordinateY = 2,
+                ClosestEnemy = null,
+            };
+
+            searchList.Add(carni);
+
 
             // ACT
 
+            var result = carnivoreManager.ChooseTheMove(searchList, field);
+
             //ASSERT
-            Assert.Throws<NullReferenceException>(() => carnivoreManager.ChooseTheMove(additionalField, field));
-        }
+
+            Assert.IsInstanceOf<List<Animal>>(result);
+
+        }*/
 
         [Test]
-        public void ChooseTheMove_WhenAnimalListIsNull_ShouldReturnNull()
+        public void ChooseTheMove_WhenFieldIsNull_ShouldReturnEmpty()
         {
             // ARRANGE
 
-            List<Animal> additionalField = null;
+            List<Animal> searchList = new List<Animal>();
+            Field field = null;
+
+            // ACT
+            var result = carnivoreManager.ChooseTheMove(searchList, field);
+            
+            //ASSERT
+            Assert.IsEmpty(result);
+        }
+
+        [Test]
+        public void ChooseTheMove_WhenAnimalListIsNull_ShouldReturnNullReferenceException()
+        {
+            // ARRANGE
+
+            List<Animal> searchList = null;
 
             Field field = new Field()
             {
@@ -81,11 +119,8 @@ namespace Savannah.Tests.Managers
                 Animals = new List<Animal>()
             };
 
-            // ACT
-            var result = carnivoreManager.ChooseTheMove(additionalField, field);
-
-            //ASSERT
-            Assert.IsNull(result);
+            // ACT & ASSERT
+            Assert.Throws<NullReferenceException>(() => carnivoreManager.ChooseTheMove(searchList, field));
         }
     }
 }

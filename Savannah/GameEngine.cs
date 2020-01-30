@@ -30,11 +30,10 @@
         public void CreateGamefield()
         {
             field = _fieldFactory.CreateField();
-            bool fieldCreated = false;
+            bool filledWithAnimals = false;
 
-            while (!fieldCreated)
+            while (!filledWithAnimals)
             {
-                var additionalField = _genericAnimal.CopyList(field);
                 _facade.SetCursorPosition();
                 _display.DrawAnimals(field);
 
@@ -46,7 +45,7 @@
 
                 if (key == TextParameters.EnterKey)
                 {
-                    fieldCreated = true;
+                    filledWithAnimals = true;
                     LifeCycle(field);
                 }
                 else if (animalKey)

@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using AnimalLibrary;
+using LionLibrary;
+using Moq;
 using NUnit.Framework;
 using Savannah.Interfaces;
 using Savannah.Models;
@@ -79,7 +81,7 @@ namespace Savannah.Tests
             lion.CoordinateX = coordX;
             lion.CoordinateY = coordY;
             lion.Health = NumParameters.MaxHealth;
-            lion.Herbivore = false;
+            lion.IsHerbivore = false;
             lion.MatingCount = NumParameters.InitialMatingCount;
             lion.Symbol = "L";
             lion.Key = ConsoleKey.L;
@@ -88,7 +90,9 @@ namespace Savannah.Tests
             var result = animalFactory.CreateAnimal(key, field);
 
             // ASSERT
-            Assert.AreEqual(lion.Herbivore, result.Herbivore);
+            Assert.AreEqual(lion.IsHerbivore, result.IsHerbivore);
+            Assert.AreEqual(lion.Symbol, result.Symbol);
+            Assert.AreEqual(lion.Key, result.Key);
         }
     }
 }

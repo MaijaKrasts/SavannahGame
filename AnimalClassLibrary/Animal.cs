@@ -1,4 +1,4 @@
-﻿namespace AnimalClassLibrary
+﻿namespace AnimalLibrary
 {
     using System;
 

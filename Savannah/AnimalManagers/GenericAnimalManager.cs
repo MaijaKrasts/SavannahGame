@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using AnimalClassLibrary;
+    using AnimalLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -24,7 +24,7 @@
         {
             List<Animal> searchList = new List<Animal>();
 
-            searchList = Extensions.DeepClone(field.Animals);
+            searchList = DeepCopy.DeepClone(field.Animals);
             return searchList;
         }
 
@@ -44,8 +44,8 @@
         {
             double ultimateLocation = _math.Vector(0, field.Width, 0, field.Height);
 
-            var carnivoreList = searchList.FindAll(a => a.IsHerbivore == false).ToList();
-            var herbivoreList = searchList.FindAll(a => a.IsHerbivore == true).ToList();
+            var carnivoreList = searchList.FindAll(a => a.IsHerbivore == false);
+            var herbivoreList = searchList.FindAll(a => a.IsHerbivore == true);
 
             foreach (var carnivore in carnivoreList)
             {
@@ -100,7 +100,7 @@
 
                         bool exactAnimal = coordX == 0 && coordY == 0;
 
-                        if(!exactAnimal)
+                        if (!exactAnimal)
                         {
                             Animal closestAnimal = FindInField(field, nextStepX, nextStepY);
                             var validBreeder = _validator.AnimalExists(nextStepX, nextStepY, field)
@@ -122,12 +122,12 @@
             bool isAnimalBreedable = false;
 
             if (animal.ClosestMate == null)
-                {
-                    animal.ClosestMate = closestAnimal;
-                    animal.MatingCount = NumParameters.ActiveMatingCount;
-                }
+            {
+                animal.ClosestMate = closestAnimal;
+                animal.MatingCount = NumParameters.ActiveMatingCount;
+            }
             else if (animal.ClosestMate != null)
-                {
+            {
                 if (animal.ClosestMate == closestAnimal)
                 {
                     animal.MatingCount++;

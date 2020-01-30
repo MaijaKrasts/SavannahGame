@@ -1,7 +1,7 @@
 ﻿namespace Savannah
 {
     using System.Collections.Generic;
-    using AnimalClassLibrary;
+    using AnimalLibrary;
     using Savannah.Models;
 
     public interface IGenericAnimalManager
@@ -16,9 +16,9 @@
 
         void ResetEnemies(Animal firstAnimal, Animal secondAnimal, Field field);
 
-        void LocateEnemy(Field field, List<Animal> searchList);
-
         void LocateFriend(Field field, List<Animal> searchList);
+
+        void LocateEnemy(Field field, List<Animal> searchList);
 
         bool BreedingValidator(Animal animal, Animal closestAnimal, Field field);
 

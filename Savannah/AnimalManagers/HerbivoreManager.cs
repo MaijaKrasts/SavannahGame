@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using AnimalClassLibrary;
+    using AnimalLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;

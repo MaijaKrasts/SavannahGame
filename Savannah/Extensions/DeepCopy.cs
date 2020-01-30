@@ -3,7 +3,7 @@
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     
-    public static class Extensions
+    public static class DeepCopy
     {
         public static T DeepClone<T>(T obj)
         {

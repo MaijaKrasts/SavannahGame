@@ -3,7 +3,6 @@
     public class NumParameters
     {
         public const double VisionRange = 6;
-        public const double LionVisionRange = 3.1;
         public const int MovingNegative = -1;
         public const int MovingPositive = 2;
         public const int BreedingNegative = -2;

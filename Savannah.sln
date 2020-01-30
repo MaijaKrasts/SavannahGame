@@ -12,13 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Savannah.Tests", "Savannah.Tests\Savannah.Tests.csproj", "{8C46B5AA-AD92-4671-AD5D-0946C0233CE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionClassLibrary", "CarnivoreClassLibrary\LionClassLibrary.csproj", "{C6DDB399-E98B-4E9C-820D-C0DAAAAAFDA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionLibrary", "CarnivoreClassLibrary\LionLibrary.csproj", "{C6DDB399-E98B-4E9C-820D-C0DAAAAAFDA0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClassLib", "ClassLib", "{646DF547-D092-4301-B602-5DDBFA611CD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntelopeClassLibrary", "AntelopeClassLibrary\AntelopeClassLibrary.csproj", "{56328EDD-FD1C-4A4C-B30F-9AF5BA2ED1AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntelopeLibrary", "AntelopeClassLibrary\AntelopeLibrary.csproj", "{56328EDD-FD1C-4A4C-B30F-9AF5BA2ED1AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalClassLibrary", "AnimalClassLibrary\AnimalClassLibrary.csproj", "{726F4C2C-CBEE-4CAD-9B0F-A501C4E48112}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalLibrary", "AnimalClassLibrary\AnimalLibrary.csproj", "{726F4C2C-CBEE-4CAD-9B0F-A501C4E48112}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

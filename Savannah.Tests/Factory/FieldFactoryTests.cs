@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using AnimalLibrary;
+using NUnit.Framework;
 using Savannah.Models;
 using System.Collections.Generic;
 

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AnimalClassLibrary\AnimalClassLibrary.csproj" />
+    <ProjectReference Include="..\AnimalClassLibrary\AnimalLibrary.csproj" />
   </ItemGroup>
 
 </Project>

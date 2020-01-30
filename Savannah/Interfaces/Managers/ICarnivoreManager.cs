@@ -1,7 +1,6 @@
 ﻿namespace Savannah.Interfaces
 {
-    using System.Collections.Generic;
-    using AnimalClassLibrary;
+    using AnimalLibrary;
     using Savannah.Models;
 
     public interface ICarnivoreManager : IAnimalManager

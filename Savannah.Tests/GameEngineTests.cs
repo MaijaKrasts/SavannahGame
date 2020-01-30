@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using AnimalLibrary;
+using Moq;
 using NUnit.Framework;
 using Savannah.Interfaces;
 using Savannah.Models;
@@ -38,19 +39,19 @@ namespace Savannah.Tests
         {
             // ARRANGE
             var field = new Field();
-            var animalList = new List<Animal>{
+            var searchList = new List<Animal>{
                 new Animal()
             };
 
             bool keyAvailable = true;
 
-            genericAnimalMock.Setup(ga => ga.AdditionalAnimalList(field)).Returns(animalList);
-            genericAnimalMock.Setup(ga => ga.LocateEnemy(field));
-            carnivoreMock.Setup(c => c.ChooseTheMove(animalList, field)).Returns(animalList);
-            herbivoreMock.Setup(h => h.ChooseTheMove(animalList, field)).Returns(animalList);
+            genericAnimalMock.Setup(ga => ga.CopyList(field)).Returns(searchList);
+            genericAnimalMock.Setup(ga => ga.LocateEnemy(field, searchList));
+            genericAnimalMock.Setup(ga => ga.LocateFriend(field, searchList));
+            carnivoreMock.Setup(c => c.ChooseTheMove(searchList, field)).Returns(searchList);
+            herbivoreMock.Setup(h => h.ChooseTheMove(searchList, field)).Returns(searchList);
             facadeMock.Setup(f => f.SetCursorPosition());
-            displayMock.Setup(d => d.DrawAnimals(field, animalList));
-            displayMock.Setup(d => d.ResetValues(field, animalList));
+            displayMock.Setup(d => d.DrawAnimals(field));
             facadeMock.Setup(f => f.Sleep());
             facadeMock.Setup(f => f.KeyAvailable()).Returns(keyAvailable);
             
@@ -58,12 +59,12 @@ namespace Savannah.Tests
             gameEngine.LifeCycle(field);
 
             // ASSERT
-            genericAnimalMock.Verify(ga => ga.AdditionalAnimalList(field), Times.Once);
-            genericAnimalMock.Verify(ga => ga.LocateEnemy(field), Times.Once);
-            carnivoreMock.Verify(c => c.ChooseTheMove(animalList, field), Times.Once);
-            herbivoreMock.Verify(h => h.ChooseTheMove(animalList, field), Times.Once);
-            displayMock.Verify(d => d.DrawAnimals(field, animalList), Times.Once);
-            displayMock.Verify(d => d.ResetValues(field, animalList), Times.Once);
+            genericAnimalMock.Verify(ga => ga.CopyList(field), Times.Once);
+            genericAnimalMock.Verify(ga => ga.LocateEnemy(field, searchList), Times.Once);
+            genericAnimalMock.Verify(ga => ga.LocateFriend(field, searchList), Times.Once);
+            carnivoreMock.Verify(c => c.ChooseTheMove(searchList, field), Times.Once);
+            herbivoreMock.Verify(h => h.ChooseTheMove(searchList, field), Times.Once);
+            displayMock.Verify(d => d.DrawAnimals(field), Times.Once);
             facadeMock.Verify(f => f.KeyAvailable(), Times.Once);
         }
     }

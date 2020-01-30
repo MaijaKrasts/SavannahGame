@@ -1,7 +1,7 @@
 ﻿namespace Savannah
 {
     using System.Collections.Generic;
-    using AnimalClassLibrary;
+    using AnimalLibrary;
     using Savannah.Interfaces;
     using Savannah.Models;
 

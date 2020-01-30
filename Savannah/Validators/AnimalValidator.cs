@@ -2,18 +2,19 @@
 {
     using Savannah.Interfaces;
     using Savannah.Models;
+    using System.Linq;
 
     public class AnimalValidator : IAnimalValidator
     {
         public bool AnimalExists(int coordinateX, int coordinateY, Field field)
         {
-            bool animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null;
+            bool animalExist = field.Animals.FirstOrDefault(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY) != null;
             return animalExist;
         }
 
         public bool CarnivoreExists(int coordinateX, int coordinateY, Field field)
         {
-            var animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
+            var animalExist = field.Animals.FirstOrDefault(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
 
             if (animalExist == null)
             {
@@ -25,7 +26,7 @@
 
         public bool HerbivoreExists(int coordinateX, int coordinateY, Field field)
         {
-            var animalExist = field.Animals.Find(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
+            var animalExist = field.Animals.FirstOrDefault(u => u.CoordinateX == coordinateX && u.CoordinateY == coordinateY);
 
             if (animalExist == null)
             {
