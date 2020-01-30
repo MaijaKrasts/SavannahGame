@@ -1,8 +1,7 @@
-﻿namespace AntelopeClassLibrary.Interfaces
-{
-    using SavannahClassLibrary.Interfaces;
+﻿//namespace AntelopeClassLibrary.Interfaces
+//{
 
-    public interface IHerbivoreManager : IAnimalManager
-    {
-    }
-}
+//    public interface IHerbivoreManager 
+//    {
+//    }
+//}

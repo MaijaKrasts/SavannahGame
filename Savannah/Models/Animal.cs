@@ -3,6 +3,7 @@ using System;
 
 namespace Savannah.Models
 {
+    [Serializable]
     public class Animal : IAnimal
     {
         public bool Alive { get; set; }

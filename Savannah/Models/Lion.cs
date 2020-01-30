@@ -1,5 +1,8 @@
-﻿namespace Savannah.Models
+﻿using System;
+
+namespace Savannah.Models
 {
+    [Serializable]
     public class Lion : Animal
     {
     }

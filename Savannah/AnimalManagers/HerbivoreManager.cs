@@ -22,28 +22,28 @@
             _genericAnimal = genericAnimal;
         }
 
-        public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
+        public List<Animal> ChooseTheMove(List<Animal> searchList, Field field)
         {
-            var herbivoreList = additionalField.FindAll(a => a.Herbivore == true).ToList();
+            var herbivoreList = searchList.FindAll(a => a.Herbivore == true).ToList();
 
             foreach (var herbivore in herbivoreList)
             {
                 if (herbivore.ClosestEnemy == null)
                 {
-                    additionalField = MoveWithoutEnemies(herbivore, additionalField, field);
+                    searchList = MoveWithoutEnemies(herbivore, searchList, field);
                 }
                 else if (herbivore.ClosestEnemy != null)
                 {
-                    additionalField = MoveWithEnemies(herbivore, additionalField, field);
+                    searchList = MoveWithEnemies(herbivore, searchList, field);
                 }
 
                 _genericAnimal.DecreaseHealth(herbivore);
             }
 
-            return additionalField;
+            return searchList;
         }
 
-        public List<Animal> MoveWithoutEnemies(Animal herbivore, List<Animal> additionalAnimal, Field field)
+        public List<Animal> MoveWithoutEnemies(Animal herbivore, List<Animal> searchList, Field field)
         {
             bool foundMove = false;
 
@@ -66,10 +66,10 @@
                 _genericAnimal.TakeAStep(nextStepX, nextStepY, herbivore, field);
             }
 
-            return additionalAnimal;
+            return searchList;
         }
 
-        public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> additionalField, Field field)
+        public List<Animal> MoveWithEnemies(Animal herbivore, List<Animal> searchList, Field field)
         {
             double closestLocation = 0;
             for (int coordX = NumParameters.MovingNegative; coordX < NumParameters.MovingPositive; coordX++)
@@ -94,7 +94,7 @@
                     }
                 }
             }
-            return additionalField;
+            return searchList;
         }
     }
 }

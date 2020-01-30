@@ -1,6 +1,5 @@
 ﻿namespace Savannah
 {
-    using System.Collections.Generic;
     using Savannah.Interfaces;
     using Savannah.Models;
     using Savannah.Static;
@@ -16,7 +15,7 @@
             _genericAnimal = genericAnimal;
         }
 
-        public void DrawAnimals(Field field, List<Animal> additionalAnimal)
+        public void DrawAnimals(Field field)
         {
             for (int currentRow = 0; currentRow < field.Height; currentRow++)
             {
@@ -38,11 +37,6 @@
                     }
                 }
             }
-        }
-
-        public void ResetValues(Field field, List<Animal> additionalAnimal)
-        {
-            
         }
     }
 }

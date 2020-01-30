@@ -21,28 +21,28 @@
             _genericAnimal = genericAnimal;
         }
 
-        public List<Animal> ChooseTheMove(List<Animal> additionalField, Field field)
+        public List<Animal> ChooseTheMove(List<Animal> seachList, Field field)
         {
-            var carnivoreList = additionalField.FindAll(a => a.Herbivore == false).ToList();
+            var carnivoreList = seachList.FindAll(a => a.Herbivore == false).ToList();
 
             foreach (var carnivore in carnivoreList)
             {
                 if (carnivore.ClosestEnemy == null)
                 {
-                    additionalField = MoveWithoutEnemies(carnivore, additionalField, field);
+                    seachList = MoveWithoutEnemies(carnivore, seachList, field);
                 }
                 else if (carnivore.ClosestEnemy != null)
                 {
-                    additionalField = MoveWithEnemies(carnivore, additionalField, field);
+                    seachList = MoveWithEnemies(carnivore, seachList, field);
                 }
 
                 _genericAnimal.DecreaseHealth(carnivore);
             }
 
-            return additionalField;
+            return seachList;
         }
 
-        public List<Animal> MoveWithoutEnemies(Animal carnivore, List<Animal> additionalField, Field field)
+        public List<Animal> MoveWithoutEnemies(Animal carnivore, List<Animal> searchList, Field field)
         {
             bool foundMove = false;
 
@@ -66,10 +66,10 @@
 
             }
 
-            return additionalField;
+            return searchList;
         }
 
-        public List<Animal> MoveWithEnemies(Animal carnivore, List<Animal> additionalField, Field field)
+        public List<Animal> MoveWithEnemies(Animal carnivore, List<Animal> searchList, Field field)
         {
             var initialLocation = _math.Vector(carnivore.CoordinateX, carnivore.CoordinateY, carnivore.ClosestEnemy.CoordinateX, carnivore.ClosestEnemy.CoordinateY);
 
@@ -102,7 +102,7 @@
                 }
             }
 
-            return additionalField;
+            return searchList;
         }
 
         public void EatVictim(Animal carnivore, Field field)

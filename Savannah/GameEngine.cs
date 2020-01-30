@@ -34,9 +34,9 @@
 
             while (!fieldCreated)
             {
-                var additionalField = _genericAnimal.AdditionalAnimalList(field);
+                var additionalField = _genericAnimal.CopyList(field);
                 _facade.SetCursorPosition();
-                _display.DrawAnimals(field, additionalField);
+                _display.DrawAnimals(field);
 
                 var key = _facade.ConsoleKey();
 
@@ -58,17 +58,17 @@
 
         public void LifeCycle(Field field)
         { 
-            var additionalField = _genericAnimal.AdditionalAnimalList(field);
             bool keyAvailabe = false;
 
             while (!keyAvailabe)
             {
-                _genericAnimal.LocateEnemy(field, additionalField);
-                _genericAnimal.LocateFriend(field, additionalField);
-                _carnivore.ChooseTheMove(additionalField, field);
-                _herbivore.ChooseTheMove(additionalField, field);
+                var searchList = _genericAnimal.CopyList(field);
+                _genericAnimal.LocateEnemy(field, searchList);
+                _genericAnimal.LocateFriend(field, searchList);
+                _carnivore.ChooseTheMove(searchList, field);
+                _herbivore.ChooseTheMove(searchList, field);
                 _facade.SetCursorPosition();
-                _display.DrawAnimals(field, additionalField);
+                _display.DrawAnimals(field);
                 _facade.Sleep();
                 keyAvailabe = _facade.KeyAvailable();
             }
